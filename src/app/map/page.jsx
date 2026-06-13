@@ -356,13 +356,36 @@ function RightWingMap() {
       {/* Reception + Bookshelves */}
       <div className="flex gap-2 mb-2">
         <div
-          className="border border-dashed border-gray-300 rounded flex items-center justify-center flex-shrink-0"
-          style={{ width: 64, height: 90, writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+          className="flex items-center justify-center flex-shrink-0"
+          style={{
+            width: 70,
+            height: 230,
+            borderRadius: '7.55px',
+            border: '0.94px dashed rgba(203,213,225,1)',
+            background: 'rgba(248,250,252,1)',
+            paddingLeft: '48.61px',
+            paddingRight: '50.5px',
+            writingMode: 'vertical-rl',
+            transform: 'rotate(180deg)',
+            boxSizing: 'border-box',
+          }}
         >
           <span className="text-[8px] font-bold uppercase tracking-widest text-gray-400">Reception</span>
         </div>
-        <div className="border border-dashed border-gray-300 rounded flex items-center justify-center flex-1" style={{ height: 90 }}>
-          <span className="text-[9px] font-bold uppercase tracking-widest text-gray-300">Bookshelves</span>
+        <div
+          className="flex items-center justify-center flex-shrink-0"
+          style={{
+            width: 1002,
+            height: 230,
+            borderRadius: '7.55px',
+            border: '0.94px dashed rgba(203,213,225,1)',
+            background: 'rgba(248,250,252,1)',
+            paddingTop: '20.29px',
+            paddingBottom: '21.24px',
+            boxSizing: 'border-box',
+          }}
+        >
+          <span className="text-[10px] font-bold uppercase tracking-widest text-gray-300">Bookshelves</span>
         </div>
       </div>
 
