@@ -130,7 +130,7 @@ export default function Dashboard() {
         </div>
       </nav>
 
-      <main className="flex flex-col flex-1 px-8 py-8" style={{ gap: 24, maxWidth: 1200 }}>
+      <main className={`flex flex-col flex-1 px-8 py-8${!session && !loading ? ' items-center justify-center' : ''}`} style={{ gap: 24, maxWidth: 1200, margin: '0 auto', width: '100%' }}>
         {loading ? (
           <p className="text-gray-400 mt-16 text-center">Loading...</p>
         ) : !session ? (
