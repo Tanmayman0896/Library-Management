@@ -256,9 +256,9 @@ export default function MapPage() {
           </div>
         </aside>
 
-        <main className="flex-1 overflow-auto bg-white">
+        <main className="flex-1 overflow-auto bg-gray-50 flex flex-col">
           <div
-            className="bg-white flex flex-col min-h-full"
+            className="bg-white flex flex-col flex-1"
             style={{
               border: '0.94px solid rgba(198,198,205,1)',
               borderRadius: '7.55px',
@@ -274,27 +274,27 @@ export default function MapPage() {
             <p className="text-[11px] text-gray-400 mt-0.5">{wing.subtitle}</p>
           </div>
 
-          {/* Grid area + right collab rooms */}
-          <div className="flex gap-5 items-start">
+          {/* Grid area + right collab rooms — fills all remaining space */}
+          <div className="flex gap-6 items-stretch flex-1 min-h-0">
 
-            {/* Grid */}
-            <div className="flex flex-col gap-4">
-              <div className="flex gap-2 items-start">
+            {/* Grid + bottom collab — grows to fill height */}
+            <div className="flex flex-col flex-1 min-w-0">
+              <div className="flex gap-2 items-start flex-1">
 
-                {/* Row label + desks */}
-                <div className="flex flex-col gap-1">
+                {/* Row label + desks — fills width */}
+                <div className="flex flex-col gap-2 flex-1">
                   {rows.map(row => (
-                    <div key={row.label} className="flex items-center gap-1">
+                    <div key={row.label} className="flex items-center gap-2 flex-1">
                       {/* Row label */}
-                      <span className="w-9 text-[9px] font-semibold text-gray-500 flex-shrink-0 text-right pr-1">
+                      <span className="w-12 text-[11px] font-semibold text-gray-500 flex-shrink-0 text-right pr-1">
                         {row.label}
                       </span>
-                      {/* Desk cells */}
+                      {/* Desk cells — each grows equally */}
                       {row.desks.map(desk => (
                         <div
                           key={desk.id}
                           title={`Desk ${desk.id} — ${desk.status}`}
-                          className={`w-8 h-8 rounded border flex items-center justify-center text-[9px] font-semibold cursor-pointer hover:opacity-75 transition-opacity select-none ${DESK_CLS[desk.status]}`}
+                          className={`flex-1 aspect-square rounded-lg border-2 flex items-center justify-center text-[11px] font-bold cursor-pointer hover:opacity-75 transition-opacity select-none min-w-0 ${DESK_CLS[desk.status]}`}
                         >
                           {desk.id}
                         </div>
@@ -304,19 +304,19 @@ export default function MapPage() {
                 </div>
 
                 {/* Zone labels (vertical) */}
-                <div className="flex flex-col gap-1 ml-1">
-                  {ZONE_SPANS.map((zone, i) => (
+                <div className="flex flex-col gap-2">
+                  {ZONE_SPANS.map((zone) => (
                     <div
                       key={zone.label}
                       className="bg-gray-100 border border-gray-200 rounded flex items-center justify-center overflow-hidden"
                       style={{
-                        width: 18,
-                        height: zone.rows * ROW_H - (zone.rows > 1 ? 0 : 0),
+                        width: 22,
+                        height: zone.rows * 52,
                         writingMode: 'vertical-rl',
                         transform: 'rotate(180deg)',
                       }}
                     >
-                      <span className="text-[7px] font-semibold text-gray-400 whitespace-nowrap px-0.5">
+                      <span className="text-[8px] font-semibold text-gray-400 whitespace-nowrap px-0.5">
                         {zone.label}
                       </span>
                     </div>
@@ -325,15 +325,15 @@ export default function MapPage() {
               </div>
 
               {/* Bottom collab rooms */}
-              <div className="flex gap-4 mt-2 pl-10">
+              <div className="flex gap-6 mt-6 pl-14">
                 {wing.collabBottom.map(room => (
-                  <div key={room.title} className="min-w-[100px]">
-                    <p className="text-[8px] font-bold uppercase tracking-wider text-gray-400 mb-1.5">{room.title}</p>
-                    <div className="flex flex-col gap-1">
+                  <div key={room.title} className="flex-1">
+                    <p className="text-[9px] font-bold uppercase tracking-wider text-gray-400 mb-2">{room.title}</p>
+                    <div className="flex flex-col gap-1.5">
                       {room.desks.map(desk => (
                         <div
                           key={desk.label}
-                          className={`text-[10px] font-medium px-3 py-1.5 rounded border cursor-pointer hover:opacity-80 transition-opacity ${STUDY_CLS[desk.status]}`}
+                          className={`text-[12px] font-semibold px-4 py-2.5 rounded-lg border-2 cursor-pointer hover:opacity-80 transition-opacity text-center ${STUDY_CLS[desk.status]}`}
                         >
                           {desk.label}
                         </div>
@@ -345,15 +345,15 @@ export default function MapPage() {
             </div>
 
             {/* Right collab rooms */}
-            <div className="flex flex-col gap-5 flex-shrink-0 min-w-[110px]">
+            <div className="flex flex-col gap-6 flex-shrink-0 w-44">
               {wing.collabRight.map(room => (
-                <div key={room.title}>
-                  <p className="text-[8px] font-bold uppercase tracking-wider text-gray-400 mb-1.5">{room.title}</p>
-                  <div className="flex flex-col gap-1">
+                <div key={room.title} className="flex-1">
+                  <p className="text-[9px] font-bold uppercase tracking-wider text-gray-400 mb-2">{room.title}</p>
+                  <div className="flex flex-col gap-1.5">
                     {room.desks.map(desk => (
                       <div
                         key={desk.label}
-                        className={`text-[10px] font-medium px-3 py-1.5 rounded border cursor-pointer hover:opacity-80 transition-opacity ${STUDY_CLS[desk.status]}`}
+                        className={`text-[12px] font-semibold px-4 py-2.5 rounded-lg border-2 cursor-pointer hover:opacity-80 transition-opacity text-center ${STUDY_CLS[desk.status]}`}
                       >
                         {desk.label}
                       </div>
