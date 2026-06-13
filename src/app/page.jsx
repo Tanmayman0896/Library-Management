@@ -30,7 +30,7 @@ export default function SplashPage() {
       <div
         style={{ position: 'relative', width: LOGO_W, height: LOGO_H }}
       >
-        {/* Layer 1 — ghost / outline feel (very faint black logo) */}
+        {/* Layer 1 — ghost outline (faint, always visible as a guide) */}
         <img
           src="/logo.svg"
           alt=""
@@ -40,13 +40,13 @@ export default function SplashPage() {
             inset: 0,
             width: '100%',
             height: '100%',
-            opacity: 0.08,
+            opacity: 0.1,
           }}
         />
 
-        {/* Layer 2 — full black logo revealed from bottom upward */}
+        {/* Layer 2 — fully filled black logo rising from bottom upward */}
         <img
-          src="/logo.svg"
+          src="/full-logo.svg"
           alt="StudySpace"
           className={stage === 'rising' ? 'logo-rise' : ''}
           style={{
@@ -54,7 +54,6 @@ export default function SplashPage() {
             inset: 0,
             width: '100%',
             height: '100%',
-            // Before animation starts keep it fully clipped (hidden)
             clipPath: stage === 'idle' ? 'inset(100% 0 0 0)' : undefined,
           }}
         />
