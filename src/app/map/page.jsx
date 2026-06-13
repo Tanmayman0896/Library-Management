@@ -390,23 +390,33 @@ function RightWingMap() {
         </div>
 
         {/* Collab Study Rooms 5 & 6 */}
-        <div className="flex flex-col gap-5 ml-4 flex-shrink-0 w-[140px]">
-          <div>
-            <p className="text-[8px] font-bold uppercase tracking-wider text-gray-400 mb-2">Collab Study Room 5</p>
-            <div className="flex flex-col gap-1.5">
-              <StudyDeskBtn label="Study Desk 1" status={O} />
-              <StudyDeskBtn label="Study Desk 2" status={O} />
-              <StudyDeskBtn label="Study Desk 3" status={O} />
+        <div className="flex flex-col gap-3 ml-4 flex-shrink-0">
+          {[
+            { title: 'Collab Study Room 5', desks: [{s:O},{s:O},{s:O}] },
+            { title: 'Collab Study Room 6', desks: [{s:O},{s:A},{s:A}] },
+          ].map((room, ri) => (
+            <div
+              key={ri}
+              className="flex flex-col items-center flex-shrink-0"
+              style={{
+                width: 200,
+                height: 230,
+                borderRadius: '7.55px',
+                border: '0.94px dashed rgba(203,213,225,1)',
+                paddingTop: '20.29px',
+                paddingBottom: '21.24px',
+                paddingLeft: '19px',
+                paddingRight: '19px',
+                gap: 12,
+                boxSizing: 'border-box',
+              }}
+            >
+              <p className="text-[9px] font-bold uppercase tracking-wider text-gray-400 w-full">{room.title}</p>
+              <div className="flex flex-col" style={{ gap: 12 }}>
+                {room.desks.map((d,i) => <StudyDeskBtn key={i} label={`Study Desk ${i+1}`} status={d.s} />)}
+              </div>
             </div>
-          </div>
-          <div>
-            <p className="text-[8px] font-bold uppercase tracking-wider text-gray-400 mb-2">Collab Study Room 6</p>
-            <div className="flex flex-col gap-1.5">
-              <StudyDeskBtn label="Study Desk 1" status={O} />
-              <StudyDeskBtn label="Study Desk 2" status={A} />
-              <StudyDeskBtn label="Study Desk 3" status={A} />
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>
@@ -542,8 +552,8 @@ export default function MapPage() {
         </aside>
 
         {/* Main */}
-        <main className="flex-1 overflow-auto bg-gray-50 p-6 flex items-start justify-start">
-          <div className="bg-white flex flex-col" style={{ width:'fit-content', minWidth:866, minHeight:866, borderRadius:'7.55px', border:'0.94px solid rgba(198,198,205,1)', boxShadow:'0 0.94px 1.89px rgba(0,0,0,0.05)', padding:28, flexShrink:0 }}>
+        <main className="flex-1 overflow-auto bg-gray-50 p-6 flex items-start justify-center">
+          <div className="bg-white flex flex-col" style={{ width:1163, minHeight:866, borderRadius:'7.55px', border:'0.94px solid rgba(198,198,205,1)', boxShadow:'0 0.94px 1.89px rgba(0,0,0,0.05)', padding:28, flexShrink:0 }}>
             <div className="mb-4 pb-4 border-b border-gray-100">
               <h2 className="text-lg font-bold text-gray-900">{meta.name} Floorplan</h2>
               <p className="text-[11px] text-gray-400 mt-0.5">{meta.subtitle}</p>
