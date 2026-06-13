@@ -73,7 +73,7 @@ function DeskDivider({ label }) {
     <div
       className="flex items-center justify-center flex-shrink-0"
       style={{
-        width: 27,
+        width: 16,
         height: 467,
         borderRadius: '7.55px',
         border: '0.94px dashed rgba(198,198,205,1)',
