@@ -168,8 +168,8 @@ export default function MapPage() {
 
       <div className="flex flex-1 overflow-hidden">
 
-        <aside className="w-52 bg-white border-r border-gray-200 flex flex-col flex-shrink-0 overflow-y-auto">
-          <div className="p-4 flex flex-col gap-4">
+        <aside className="w-48 bg-white border-r border-gray-200 flex flex-col flex-shrink-0 overflow-hidden">
+          <div className="p-3 flex flex-col gap-2">
 
             {/* Library info */}
             <div>
@@ -185,18 +185,18 @@ export default function MapPage() {
             {/* Occupancy */}
             <div>
               <p className="text-[9px] font-bold uppercase tracking-wider text-gray-400 mb-2">Current Occupancy</p>
-              <p className={`text-3xl font-extrabold leading-none ${pctColor}`}>
+              <p className={`text-2xl font-extrabold leading-none ${pctColor}`}>
                 {wing.occupancy}%{' '}
                 <span className="text-sm font-semibold text-gray-500">Full</span>
               </p>
-              <div className="flex gap-2 mt-3">
-                <div className="flex-1 bg-gray-50 rounded-lg p-2 border border-gray-100">
-                  <p className="text-[9px] text-gray-400 leading-tight">Available Desks</p>
-                  <p className="text-lg font-extrabold text-black leading-tight mt-0.5">{wing.availableDesks}</p>
+              <div className="flex gap-2 mt-2">
+                <div className="flex-1 bg-gray-50 rounded p-1.5 border border-gray-100">
+                  <p className="text-[8px] text-gray-400 leading-tight">Available Desks</p>
+                  <p className="text-base font-extrabold text-black leading-tight mt-0.5">{wing.availableDesks}</p>
                 </div>
-                <div className="flex-1 bg-gray-50 rounded-lg p-2 border border-gray-100">
-                  <p className="text-[9px] text-gray-400 leading-tight">Avg. Wait Time</p>
-                  <p className="text-lg font-extrabold text-black leading-tight mt-0.5">{wing.avgWaitTime}</p>
+                <div className="flex-1 bg-gray-50 rounded p-1.5 border border-gray-100">
+                  <p className="text-[8px] text-gray-400 leading-tight">Avg. Wait Time</p>
+                  <p className="text-base font-extrabold text-black leading-tight mt-0.5">{wing.avgWaitTime}</p>
                 </div>
               </div>
             </div>
@@ -256,45 +256,43 @@ export default function MapPage() {
           </div>
         </aside>
 
-        <main className="flex-1 overflow-auto bg-gray-50 flex flex-col">
+        <main className="flex-1 overflow-hidden bg-gray-50 flex flex-col">
           <div
-            className="bg-white flex flex-col flex-1"
+            className="bg-white flex flex-col flex-1 overflow-hidden"
             style={{
               border: '0.94px solid rgba(198,198,205,1)',
               borderRadius: '7.55px',
-              margin: '16px',
-              padding: '28px',
+              margin: '10px',
+              padding: '16px',
               boxShadow: '0 0.94px 1.89px rgba(0,0,0,0.05)',
             }}
           >
 
           {/* Header */}
-          <div className="mb-5">
-            <h2 className="text-lg font-bold text-gray-900">{wing.name} Floorplan</h2>
-            <p className="text-[11px] text-gray-400 mt-0.5">{wing.subtitle}</p>
+          <div className="mb-2">
+            <h2 className="text-base font-bold text-gray-900">{wing.name} Floorplan</h2>
+            <p className="text-[10px] text-gray-400 mt-0.5">{wing.subtitle}</p>
           </div>
 
           {/* Grid area + right collab rooms — fills all remaining space */}
-          <div className="flex gap-6 items-stretch flex-1 min-h-0">
+          <div className="flex gap-4 items-stretch flex-1 min-h-0 overflow-hidden">
 
             {/* Grid + bottom collab — grows to fill height */}
-            <div className="flex flex-col flex-1 min-w-0">
-              <div className="flex gap-2 items-start flex-1">
+            <div className="flex flex-col flex-1 min-w-0 overflow-hidden">
+              <div className="flex gap-1.5 items-start flex-1 min-h-0">
 
                 {/* Row label + desks — fills width */}
-                <div className="flex flex-col gap-2 flex-1">
+                <div className="flex flex-col gap-1 flex-1 justify-between h-full">
                   {rows.map(row => (
-                    <div key={row.label} className="flex items-center gap-2 flex-1">
-                      {/* Row label */}
-                      <span className="w-12 text-[11px] font-semibold text-gray-500 flex-shrink-0 text-right pr-1">
+                    <div key={row.label} className="flex items-center gap-1 flex-1">
+                      <span className="w-10 text-[9px] font-semibold text-gray-500 flex-shrink-0 text-right pr-1">
                         {row.label}
                       </span>
-                      {/* Desk cells — each grows equally */}
                       {row.desks.map(desk => (
                         <div
                           key={desk.id}
                           title={`Desk ${desk.id} — ${desk.status}`}
-                          className={`flex-1 aspect-square rounded-lg border-2 flex items-center justify-center text-[11px] font-bold cursor-pointer hover:opacity-75 transition-opacity select-none min-w-0 ${DESK_CLS[desk.status]}`}
+                          className={`flex-1 aspect-square rounded border flex items-center justify-center text-[9px] font-bold cursor-pointer hover:opacity-75 transition-opacity select-none min-w-0 ${DESK_CLS[desk.status]}`}
                         >
                           {desk.id}
                         </div>
@@ -304,19 +302,14 @@ export default function MapPage() {
                 </div>
 
                 {/* Zone labels (vertical) */}
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-1 h-full justify-between">
                   {ZONE_SPANS.map((zone) => (
                     <div
                       key={zone.label}
-                      className="bg-gray-100 border border-gray-200 rounded flex items-center justify-center overflow-hidden"
-                      style={{
-                        width: 22,
-                        height: zone.rows * 52,
-                        writingMode: 'vertical-rl',
-                        transform: 'rotate(180deg)',
-                      }}
+                      className="bg-gray-100 border border-gray-200 rounded flex items-center justify-center overflow-hidden flex-1"
+                      style={{ width: 18, writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
                     >
-                      <span className="text-[8px] font-semibold text-gray-400 whitespace-nowrap px-0.5">
+                      <span className="text-[7px] font-semibold text-gray-400 whitespace-nowrap px-0.5">
                         {zone.label}
                       </span>
                     </div>
@@ -325,15 +318,15 @@ export default function MapPage() {
               </div>
 
               {/* Bottom collab rooms */}
-              <div className="flex gap-6 mt-6 pl-14">
+              <div className="flex gap-4 mt-2 pl-11">
                 {wing.collabBottom.map(room => (
                   <div key={room.title} className="flex-1">
-                    <p className="text-[9px] font-bold uppercase tracking-wider text-gray-400 mb-2">{room.title}</p>
-                    <div className="flex flex-col gap-1.5">
+                    <p className="text-[7px] font-bold uppercase tracking-wider text-gray-400 mb-1">{room.title}</p>
+                    <div className="flex flex-col gap-1">
                       {room.desks.map(desk => (
                         <div
                           key={desk.label}
-                          className={`text-[12px] font-semibold px-4 py-2.5 rounded-lg border-2 cursor-pointer hover:opacity-80 transition-opacity text-center ${STUDY_CLS[desk.status]}`}
+                          className={`text-[10px] font-medium px-2 py-1.5 rounded border cursor-pointer hover:opacity-80 transition-opacity text-center ${STUDY_CLS[desk.status]}`}
                         >
                           {desk.label}
                         </div>
@@ -345,15 +338,15 @@ export default function MapPage() {
             </div>
 
             {/* Right collab rooms */}
-            <div className="flex flex-col gap-6 flex-shrink-0 w-44">
+            <div className="flex flex-col gap-3 flex-shrink-0 w-36">
               {wing.collabRight.map(room => (
                 <div key={room.title} className="flex-1">
-                  <p className="text-[9px] font-bold uppercase tracking-wider text-gray-400 mb-2">{room.title}</p>
-                  <div className="flex flex-col gap-1.5">
+                  <p className="text-[7px] font-bold uppercase tracking-wider text-gray-400 mb-1">{room.title}</p>
+                  <div className="flex flex-col gap-1 h-full">
                     {room.desks.map(desk => (
                       <div
                         key={desk.label}
-                        className={`text-[12px] font-semibold px-4 py-2.5 rounded-lg border-2 cursor-pointer hover:opacity-80 transition-opacity text-center ${STUDY_CLS[desk.status]}`}
+                        className={`text-[10px] font-medium px-2 py-1.5 rounded border cursor-pointer hover:opacity-80 transition-opacity text-center flex-1 flex items-center justify-center ${STUDY_CLS[desk.status]}`}
                       >
                         {desk.label}
                       </div>
