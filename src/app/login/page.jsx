@@ -27,7 +27,7 @@ export default function LoginPage() {
         }}
       >
         <Image
-          src="/white-logo.svg"
+          src="/full-logo.svg"
           alt="DeskGuard"
           width={480}
           height={360}
