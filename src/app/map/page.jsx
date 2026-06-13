@@ -54,7 +54,7 @@ function CubicleCell({ label, status = O }) {
       className="flex items-center justify-center cursor-pointer select-none hover:opacity-75 transition-opacity text-[8px] font-semibold"
       style={{
         width: 62,
-        height: 149,
+        height: 145,
         borderRadius: '2.94px',
         border: s.border,
         background: s.background,
@@ -74,7 +74,7 @@ function DeskDivider({ label }) {
       className="flex items-center justify-center flex-shrink-0"
       style={{
         width: 16,
-        height: 467,
+        height: 442,
         borderRadius: '7.55px',
         border: '0.94px dashed rgba(198,198,205,1)',
         background: 'rgba(248,250,252,1)',
