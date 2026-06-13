@@ -3,15 +3,18 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 export default function LoginPage() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
+  const router = useRouter()
 
   function handleSubmit(e) {
     e.preventDefault()
     // Auth logic goes here
+    router.push('/map')
   }
 
   return (
