@@ -20,8 +20,14 @@ body {
 }
 
 html::-webkit-scrollbar,
-body::-webkit-scrollbar {
-  display: none; /* Chrome/Safari/Opera */
+body::-webkit-scrollbar,
+*::-webkit-scrollbar {
+  display: none;
+}
+
+* {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 /* Splash screen — black fills logo from bottom to top */
