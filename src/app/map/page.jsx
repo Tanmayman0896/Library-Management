@@ -29,7 +29,7 @@ function CubicleCell({ label, status = O }) {
   return (
     <div
       className={`flex items-center justify-center rounded text-[8px] font-semibold cursor-pointer select-none hover:opacity-75 transition-opacity ${DESK_CLS[status]}`}
-      style={{ width: 36, height: 80, writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+      style={{ width: 40, height: 40, writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
     >
       {label}
     </div>
@@ -129,29 +129,9 @@ function LeftWingMap() {
           <CubRow cells={cub2} />
           <CubRow cells={cub3} />
         </div>
-
-        {/* Right collab rooms: 4 (top) and 3 (below) */}
-        <div className="flex flex-col gap-4 ml-3 flex-shrink-0 w-[140px]">
-          <div>
-            <p className="text-[8px] font-bold uppercase tracking-wider text-gray-400 mb-1.5">Collab Study Room 4</p>
-            <div className="flex flex-col gap-1.5">
-              <StudyDeskBtn label="Study Desk 1" status={O} />
-              <StudyDeskBtn label="Study Desk 2" status={O} />
-              <StudyDeskBtn label="Study Desk 3" status={A} />
-            </div>
-          </div>
-          <div>
-            <p className="text-[8px] font-bold uppercase tracking-wider text-gray-400 mb-1.5">Collab Study Room 3</p>
-            <div className="flex flex-col gap-1.5">
-              <StudyDeskBtn label="Study Desk 1" status={A} />
-              <StudyDeskBtn label="Study Desk 2" status={A} />
-              <StudyDeskBtn label="Study Desk 3" status={A} />
-            </div>
-          </div>
-        </div>
       </div>
 
-      {/* ── Bottom section: Reception + Bookshelves + Collab Rooms 1 & 2 ── */}
+      {/* ── Bottom section: Reception + Bookshelves + Collab Rooms 1, 2, 3, 4 ── */}
       <div className="flex gap-3 items-stretch mt-1">
         {/* Reception */}
         <div
@@ -166,25 +146,20 @@ function LeftWingMap() {
           <span className="text-[10px] font-bold uppercase tracking-widest text-gray-300">Bookshelves</span>
         </div>
 
-        {/* Collab Study Room 1 */}
-        <div className="flex-shrink-0 w-[140px]">
-          <p className="text-[8px] font-bold uppercase tracking-wider text-gray-400 mb-1.5">Collab Study Room 1</p>
-          <div className="flex flex-col gap-1.5">
-            <StudyDeskBtn label="Study Desk 1" status={O} />
-            <StudyDeskBtn label="Study Desk 2" status={A} />
-            <StudyDeskBtn label="Study Desk 3" status={A} />
+        {/* Collab Study Rooms 1, 2, 3, 4 — all in one row */}
+        {[
+          { title: 'Collab Study Room 1', desks: [{s:O},{s:A},{s:A}] },
+          { title: 'Collab Study Room 2', desks: [{s:O},{s:O},{s:A}] },
+          { title: 'Collab Study Room 3', desks: [{s:A},{s:A},{s:A}] },
+          { title: 'Collab Study Room 4', desks: [{s:O},{s:O},{s:A}] },
+        ].map((room, ri) => (
+          <div key={ri} className="flex-shrink-0 w-[130px]">
+            <p className="text-[8px] font-bold uppercase tracking-wider text-gray-400 mb-1.5">{room.title}</p>
+            <div className="flex flex-col gap-1.5">
+              {room.desks.map((d,i) => <StudyDeskBtn key={i} label={`Study Desk ${i+1}`} status={d.s} />)}
+            </div>
           </div>
-        </div>
-
-        {/* Collab Study Room 2 */}
-        <div className="flex-shrink-0 w-[140px]">
-          <p className="text-[8px] font-bold uppercase tracking-wider text-gray-400 mb-1.5">Collab Study Room 2</p>
-          <div className="flex flex-col gap-1.5">
-            <StudyDeskBtn label="Study Desk 1" status={O} />
-            <StudyDeskBtn label="Study Desk 2" status={O} />
-            <StudyDeskBtn label="Study Desk 3" status={A} />
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   )
