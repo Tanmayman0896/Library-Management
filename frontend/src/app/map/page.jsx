@@ -5,90 +5,61 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { logout, getDesks, checkin } from '@/lib/api'
 
-const A = 'available', O = 'occupied', W = 'away'
-
 const DESK_STYLE = {
   available: { background: 'rgba(240,253,244,1)', border: '0.74px solid rgba(134,239,172,1)', color: '#166534' },
   occupied:  { background: 'rgba(254,242,242,1)', border: '0.74px solid rgba(254,202,202,1)', color: '#991b1b' },
   away:      { background: 'rgba(254,252,232,1)', border: '0.74px solid rgba(253,224,71,1)',  color: '#854d0e' },
 }
 
-function DeskModal({ desk, onClose, onCheckin, checkinLoading }) {
-  const isAway = desk.status === 'away'
-  const isOccupied = desk.status === 'occupied'
-  const isFree = desk.status === 'available'
+function apiStatusToLocal(s) {
+  if (s === 'FREE') return 'available'
+  if (s === 'AWAY') return 'away'
+  return 'occupied'
+}
 
-  const bg = isFree ? '#fafaf8' : isAway ? '#1a1a1a' : '#1a1a1a'
+function DeskModal({ desk, onClose, onCheckin, checkinLoading }) {
+  const isFree = desk.status === 'available'
+  const isAway = desk.status === 'away'
+  const bg = isFree ? '#fafaf8' : '#1a1a1a'
   const qr = isFree ? '/black qr.svg' : isAway ? '/yellow qr.svg' : '/red qr.svg'
   const qrBg = isFree ? 'rgba(245,243,235,1)' : isAway ? 'rgba(255,248,230,1)' : 'rgba(255,235,235,1)'
   const tagColor = isFree ? '#2563eb' : isAway ? '#d97706' : '#dc2626'
   const labelColor = isFree ? '#111827' : isAway ? '#f59e0b' : '#ef4444'
-  const textColor = isFree ? '#111827' : '#ffffff'
-  const subTextColor = isFree ? '#6b7280' : 'rgba(255,255,255,0.6)'
   const borderColor = isFree ? '#e5e7eb' : 'rgba(255,255,255,0.12)'
-
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center" onClick={onClose}>
       <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]" />
-      <div
-        className="relative rounded-2xl shadow-2xl flex flex-col items-center"
-        style={{ width: 280, background: bg, padding: '28px 24px 24px', border: `1px solid ${borderColor}` }}
-        onClick={e => e.stopPropagation()}
-      >
-        <button
-          onClick={onClose}
-          className="absolute top-3 right-3 w-7 h-7 flex items-center justify-center rounded-full"
-          style={{ background: isFree ? '#f3f4f6' : 'rgba(255,255,255,0.1)', color: isFree ? '#6b7280' : 'rgba(255,255,255,0.5)' }}
-        >
+      <div className="relative rounded-2xl shadow-2xl flex flex-col items-center" style={{ width: 280, background: bg, padding: '28px 24px 24px', border: `1px solid ${borderColor}` }} onClick={e => e.stopPropagation()}>
+        <button onClick={onClose} className="absolute top-3 right-3 w-7 h-7 flex items-center justify-center rounded-full" style={{ background: isFree ? '#f3f4f6' : 'rgba(255,255,255,0.1)', color: isFree ? '#6b7280' : 'rgba(255,255,255,0.5)' }}>
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 1l10 10M11 1L1 11" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg>
         </button>
-
         <div className="rounded-xl flex items-center justify-center mb-4" style={{ width: 72, height: 72, background: qrBg }}>
           <Image src={qr} alt="QR" width={40} height={40} />
         </div>
-
         <p className="text-[10px] font-bold tracking-widest uppercase mb-1" style={{ color: tagColor }}>
           {isFree ? 'Ready for Check-In' : isAway ? 'Already Occupied · Away' : 'Already Occupied'}
         </p>
-
-        <h2 className="text-[26px] font-bold mb-4" style={{ color: labelColor, letterSpacing: '-0.5px' }}>
-          Desk {desk.label}
+        <h2 className="text-[24px] font-bold mb-4 text-center" style={{ color: labelColor, letterSpacing: '-0.5px' }}>
+          {desk.displayLabel || `Desk ${desk.label}`}
         </h2>
-
         {isFree && (
           <div className="w-full rounded-xl px-4 py-3 mb-5" style={{ background: 'rgba(249,250,251,1)', border: '1px solid #e5e7eb' }}>
             <div className="flex items-start gap-2">
               <svg width="14" height="14" viewBox="0 0 16 16" fill="none" className="mt-0.5 flex-shrink-0"><circle cx="8" cy="8" r="7" stroke="#9ca3af" strokeWidth="1.2"/><path d="M8 7v4" stroke="#9ca3af" strokeWidth="1.2" strokeLinecap="round"/><circle cx="8" cy="5" r="0.7" fill="#9ca3af"/></svg>
-              <p className="text-[11px] leading-relaxed" style={{ color: '#6b7280' }}>
-                By checking in, you agree to the 2-hour activity prompts. Please ensure you clear your belongings if leaving for more than 30 minutes.
-              </p>
+              <p className="text-[11px] leading-relaxed" style={{ color: '#6b7280' }}>By checking in, you agree to the 2-hour activity prompts. Please ensure you clear your belongings if leaving for more than 30 minutes.</p>
             </div>
           </div>
         )}
-
         {isFree ? (
-          <button
-            onClick={() => onCheckin(desk.label)}
-            disabled={checkinLoading}
-            className="w-full rounded-xl py-3.5 text-sm font-semibold text-white flex items-center justify-center gap-2 disabled:opacity-60"
-            style={{ background: '#111827' }}
-          >
-            Check-in Now →
+          <button onClick={() => onCheckin(desk.label)} disabled={checkinLoading} className="w-full rounded-xl py-3.5 text-sm font-semibold text-white flex items-center justify-center gap-2 disabled:opacity-60" style={{ background: '#111827' }}>
+            {checkinLoading ? 'Checking in...' : 'Check-in Now →'}
           </button>
         ) : (
-          <button
-            className="w-full rounded-xl py-3.5 text-sm font-semibold text-white flex items-center justify-center gap-2"
-            style={{ background: '#111827' }}
-          >
+          <button className="w-full rounded-xl py-3.5 text-sm font-semibold text-white flex items-center justify-center gap-2" style={{ background: '#111827' }}>
             Notify When Vacated →
           </button>
         )}
-
-        <button
-          onClick={onClose}
-          className="w-full rounded-xl py-3.5 text-sm font-semibold mt-2.5 flex items-center justify-center gap-2"
-          style={{ background: isFree ? 'white' : 'rgba(255,255,255,0.08)', color: isFree ? '#374151' : 'rgba(255,255,255,0.7)', border: `1px solid ${isFree ? '#e5e7eb' : 'rgba(255,255,255,0.1)'}` }}
-        >
+        <button onClick={onClose} className="w-full rounded-xl py-3.5 text-sm font-semibold mt-2.5 flex items-center justify-center gap-2" style={{ background: isFree ? 'white' : 'rgba(255,255,255,0.08)', color: isFree ? '#374151' : 'rgba(255,255,255,0.7)', border: `1px solid ${isFree ? '#e5e7eb' : 'rgba(255,255,255,0.1)'}` }}>
           <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" strokeWidth="1.3"/><path d="M4 8h8M8 4l4 4-4 4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg>
           Go to Map
         </button>
@@ -97,36 +68,25 @@ function DeskModal({ desk, onClose, onCheckin, checkinLoading }) {
   )
 }
 
-function DeskCell({ label, status = 'occupied', onClick }) {
+function DeskCell({ label, displayLabel, status = 'occupied', onClick }) {
   const s = DESK_STYLE[status] || DESK_STYLE.occupied
   return (
-    <div
-      onClick={onClick}
-      className="flex items-center justify-center cursor-pointer select-none hover:opacity-75 transition-opacity text-[9px] font-semibold"
-      style={{ width: 59.71, height: 59.71, borderRadius: '2.94px', border: s.border, background: s.background, color: s.color, flexShrink: 0 }}
-    >
-      {label}
+    <div onClick={onClick} className="flex items-center justify-center cursor-pointer select-none hover:opacity-75 transition-opacity text-[9px] font-semibold" style={{ width: 59.71, height: 59.71, borderRadius: '2.94px', border: s.border, background: s.background, color: s.color, flexShrink: 0 }}>
+      {displayLabel || label}
     </div>
   )
 }
-function CubicleCell({ label, status = 'occupied', onClick }) {
+function CubicleCell({ label, displayLabel, status = 'occupied', onClick }) {
   const s = DESK_STYLE[status] || DESK_STYLE.occupied
   return (
-    <div
-      onClick={onClick}
-      className="flex items-center justify-center cursor-pointer select-none hover:opacity-75 transition-opacity text-[8px] font-semibold"
-      style={{ width: 62, height: 145, borderRadius: '2.94px', border: s.border, background: s.background, color: s.color, writingMode: 'vertical-rl', transform: 'rotate(180deg)', flexShrink: 0 }}
-    >
-      {label}
+    <div onClick={onClick} className="flex items-center justify-center cursor-pointer select-none hover:opacity-75 transition-opacity text-[8px] font-semibold" style={{ width: 62, height: 145, borderRadius: '2.94px', border: s.border, background: s.background, color: s.color, writingMode: 'vertical-rl', transform: 'rotate(180deg)', flexShrink: 0 }}>
+      {displayLabel || label}
     </div>
   )
 }
 function DeskDivider({ label }) {
   return (
-    <div
-      className="flex items-center justify-center flex-shrink-0"
-      style={{ width: 50, height: 442, borderRadius: '7.55px', border: '0.94px dashed rgba(198,198,205,1)', background: 'rgba(248,250,252,1)', writingMode: 'vertical-rl', transform: 'rotate(180deg)', overflow: 'hidden', flexShrink: 5 }}
-    >
+    <div className="flex items-center justify-center flex-shrink-0" style={{ width: 50, height: 442, borderRadius: '7.55px', border: '0.94px dashed rgba(198,198,205,1)', background: 'rgba(248,250,252,1)', writingMode: 'vertical-rl', transform: 'rotate(180deg)', overflow: 'hidden', flexShrink: 5 }}>
       <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400">{label}</span>
     </div>
   )
@@ -136,46 +96,36 @@ const STUDY_STYLE = {
   occupied:  { background: 'rgba(254,242,242,1)', border: '0.94px solid rgba(254,202,202,1)', color: '#991b1b' },
   away:      { background: 'rgba(254,252,232,1)', border: '0.94px solid rgba(253,224,71,1)',  color: '#854d0e' },
 }
-function StudyDeskBtn({ label, status, onClick }) {
+function StudyDeskBtn({ label, displayLabel, status, onClick }) {
   const s = STUDY_STYLE[status] || STUDY_STYLE.occupied
   return (
-    <div
-      onClick={onClick}
-      className="flex items-center justify-center cursor-pointer select-none hover:opacity-80 transition-opacity text-[11px] font-semibold"
-      style={{ width: 162, height: 42, borderRadius: '3.78px', border: s.border, background: s.background, color: s.color, flexShrink: 0 }}
-    >
-      {label}
+    <div onClick={onClick} className="flex items-center justify-center cursor-pointer select-none hover:opacity-80 transition-opacity text-[11px] font-semibold" style={{ width: 162, height: 42, borderRadius: '3.78px', border: s.border, background: s.background, color: s.color, flexShrink: 0 }}>
+      {displayLabel || label}
     </div>
   )
 }
 
-function apiStatusToLocal(apiStatus) {
-  if (apiStatus === 'FREE') return 'available'
-  if (apiStatus === 'AWAY') return 'away'
-  return 'occupied'
-}
-
 function LeftWingMap({ deskMap, onDeskClick }) {
-  function ds(label) { return deskMap[label] || 'occupied' }
-  function cell(label) { return { label, status: ds(label), onClick: () => onDeskClick(label, ds(label)) } }
-
-  const pc1 = ['LW-01','LW-02','LW-03','LW-04','LW-05','LW-06'].map(cell)
-  const pc2 = ['LW-07','LW-08','LW-09','LW-10','LW-11','LW-12'].map(cell)
-  const desk1 = ['LW-13','LW-14','LW-15','LW-16','LW-17','LW-18','LW-19'].map(cell)
-  const desk2 = ['LW-20','LW-21','LW-22','LW-23','LW-24','LW-25','LW-26'].map(cell)
-  const desk3 = ['LW-27','LW-28','LW-29','LW-30'].map(cell)
-
-  const cub1 = ['LC-01','LC-02','LC-03','LC-04'].map(label => ({ label, status: ds(label), onClick: () => onDeskClick(label, ds(label)) }))
-  const cub2 = ['LC-05','LC-06','LC-07','LC-08'].map(label => ({ label, status: ds(label), onClick: () => onDeskClick(label, ds(label)) }))
-
-  const study = ['LS-01','LS-02','LS-03','LS-04','LS-05','LS-06','LS-07','LS-08','LS-09','LS-10','LS-11','LS-12']
-
-  function Col({ cells }) {
-    return <div className="flex flex-col gap-1">{cells.map((c,i) => <DeskCell key={i} {...c} />)}</div>
+  function ds(label) { return deskMap[label] || 'available' }
+  function cell(label, display) {
+    return { label, displayLabel: display || label, status: ds(label), onClick: () => onDeskClick(label, ds(label), display || label) }
   }
-  function CubRow({ cells }) {
-    return <div className="flex gap-1">{cells.map((c,i) => <CubicleCell key={i} {...c} />)}</div>
-  }
+
+  const pc1 = [1,2,3,4,5,6,7].map(i => cell(`PC ${i}`))
+  const pc2 = [8,9,10,11,12,13,14].map(i => cell(`PC ${i}`))
+  const desk1 = [1,2,3,4,5,6,7].map(i => cell(String(i).padStart(2,'0')))
+  const desk2 = [8,9,10,11,12,13,14].map(i => cell(String(i).padStart(2,'0')))
+  const desk3 = [15,16,17,18,19,20,21].map(i => cell(String(i).padStart(2,'0')))
+  const desk4 = [22,23,24,25,26,27,28].map(i => cell(String(i).padStart(2,'0')))
+
+  const cubCols = [
+    [1,2,3],[4,5,6],[7,8,9],[10,11,12],[13,14,15],[16,17,18]
+  ].map(nums => nums.map(i => cell(`Cubicle ${String(i).padStart(2,'0')}`)))
+
+  const sr = (room, n) => cell(`L-SR${room}-SD${n}`, `Study Desk ${n}`)
+
+  function Col({ cells }) { return <div className="flex flex-col gap-1">{cells.map((c,i) => <DeskCell key={i} {...c} />)}</div> }
+  function CubCol({ cells }) { return <div className="flex flex-col gap-1">{cells.map((c,i) => <CubicleCell key={i} {...c} />)}</div> }
 
   return (
     <div className="flex flex-col gap-3">
@@ -187,19 +137,19 @@ function LeftWingMap({ deskMap, onDeskClick }) {
         <Col cells={desk2} />
         <Col cells={desk3} />
         <DeskDivider label="DESK" />
-        <div className="flex flex-col gap-1 ml-1">
-          <CubRow cells={cub1} />
-          <CubRow cells={cub2} />
+        <Col cells={desk4} />
+        <div className="flex gap-1 ml-1">
+          {cubCols.map((col, i) => <CubCol key={i} cells={col} />)}
         </div>
         <div className="flex flex-col gap-3 ml-3">
           {[
-            { title: 'Collab Study Room 4', labels: study.slice(9, 12) },
-            { title: 'Collab Study Room 3', labels: study.slice(6, 9) },
+            { title: 'COLLAB STUDY ROOM 4', desks: [sr(4,1),sr(4,2),sr(4,3)] },
+            { title: 'COLLAB STUDY ROOM 3', desks: [sr(3,1),sr(3,2),sr(3,3)] },
           ].map((room, ri) => (
-            <div key={ri} className="flex flex-col items-center flex-shrink-0" style={{ width: 200, height: 210, borderRadius: '7.55px', border: '0.94px dashed rgba(203,213,225,1)', paddingTop: '20px', paddingBottom: '24px', paddingLeft: '19px', paddingRight: '19px', gap: 12, boxSizing: 'border-box' }}>
-              <p className="text-[9px] font-bold uppercase tracking-wider text-gray-400 w-full">{room.title}</p>
-              <div className="flex flex-col" style={{ gap: 12 }}>
-                {room.labels.map((l, i) => <StudyDeskBtn key={i} label={l} status={ds(l)} onClick={() => onDeskClick(l, ds(l))} />)}
+            <div key={ri} className="flex flex-col flex-shrink-0" style={{ width: 200, height: 210, borderRadius: '7.55px', border: '0.94px dashed rgba(203,213,225,1)', padding: '16px 16px 20px', gap: 10, boxSizing: 'border-box' }}>
+              <p className="text-[9px] font-bold uppercase tracking-wider text-gray-400">{room.title}</p>
+              <div className="flex flex-col" style={{ gap: 10 }}>
+                {room.desks.map((d, i) => <StudyDeskBtn key={i} {...d} />)}
               </div>
             </div>
           ))}
@@ -209,17 +159,17 @@ function LeftWingMap({ deskMap, onDeskClick }) {
         <div className="flex items-center justify-center flex-shrink-0" style={{ width: 70, height: 230, borderRadius: '7.55px', border: '0.94px dashed rgba(203,213,225,1)', background: 'rgba(248,250,252,1)', writingMode: 'vertical-rl', transform: 'rotate(180deg)', boxSizing: 'border-box' }}>
           <span className="text-[8px] font-bold uppercase tracking-widest text-gray-400">Reception</span>
         </div>
-        <div className="flex items-center justify-center flex-shrink-0" style={{ width: 580, height: 230, borderRadius: '7.55px', border: '0.94px dashed rgba(203,213,225,1)', background: 'rgba(248,250,252,1)', boxSizing: 'border-box' }}>
+        <div className="flex items-center justify-center flex-shrink-0" style={{ width: 440, height: 230, borderRadius: '7.55px', border: '0.94px dashed rgba(203,213,225,1)', background: 'rgba(248,250,252,1)', boxSizing: 'border-box' }}>
           <span className="text-[10px] font-bold uppercase tracking-widest text-gray-300">Bookshelves</span>
         </div>
         {[
-          { title: 'Collab Study Room 1', labels: study.slice(0, 3) },
-          { title: 'Collab Study Room 2', labels: study.slice(3, 6) },
+          { title: 'COLLAB STUDY ROOM 1', desks: [sr(1,1),sr(1,2),sr(1,3)] },
+          { title: 'COLLAB STUDY ROOM 2', desks: [sr(2,1),sr(2,2),sr(2,3)] },
         ].map((room, ri) => (
-          <div key={ri} className="flex flex-col items-center flex-shrink-0" style={{ width: 200, height: 230, borderRadius: '7.55px', border: '0.94px dashed rgba(203,213,225,1)', paddingTop: '20px', paddingBottom: '21px', paddingLeft: '19px', paddingRight: '19px', gap: 12, boxSizing: 'border-box' }}>
-            <p className="text-[9px] font-bold uppercase tracking-wider text-gray-400 w-full">{room.title}</p>
-            <div className="flex flex-col" style={{ gap: 12 }}>
-              {room.labels.map((l, i) => <StudyDeskBtn key={i} label={l} status={ds(l)} onClick={() => onDeskClick(l, ds(l))} />)}
+          <div key={ri} className="flex flex-col flex-shrink-0" style={{ width: 200, height: 230, borderRadius: '7.55px', border: '0.94px dashed rgba(203,213,225,1)', padding: '16px 16px 20px', gap: 10, boxSizing: 'border-box' }}>
+            <p className="text-[9px] font-bold uppercase tracking-wider text-gray-400">{room.title}</p>
+            <div className="flex flex-col" style={{ gap: 10 }}>
+              {room.desks.map((d, i) => <StudyDeskBtn key={i} {...d} />)}
             </div>
           </div>
         ))}
@@ -229,26 +179,26 @@ function LeftWingMap({ deskMap, onDeskClick }) {
 }
 
 function RightWingMap({ deskMap, onDeskClick }) {
-  function ds(label) { return deskMap[label] || 'occupied' }
-  function cell(label) { return { label, status: ds(label), onClick: () => onDeskClick(label, ds(label)) } }
-
-  const pcGroup1 = ['RW-01','RW-02','RW-03','RW-04','RW-05','RW-06'].map(cell)
-  const pcGroup2 = ['RW-07','RW-08','RW-09','RW-10','RW-11','RW-12'].map(cell)
-  const deskCol1 = ['RW-13','RW-14','RW-15','RW-16','RW-17','RW-18','RW-19'].map(cell)
-  const deskCol2 = ['RW-20','RW-21','RW-22','RW-23','RW-24','RW-25','RW-26'].map(cell)
-  const deskCol3 = ['RW-27','RW-28','RW-29','RW-30'].map(cell)
-
-  const cubRow1 = ['RC-01','RC-02','RC-03','RC-04'].map(label => ({ label, status: ds(label), onClick: () => onDeskClick(label, ds(label)) }))
-  const cubRow2 = ['RC-05','RC-06','RC-07','RC-08'].map(label => ({ label, status: ds(label), onClick: () => onDeskClick(label, ds(label)) }))
-
-  const study = ['RS-01','RS-02','RS-03','RS-04','RS-05','RS-06','RS-07','RS-08','RS-09','RS-10','RS-11','RS-12']
-
-  function PcCol({ cells }) {
-    return <div className="flex flex-col gap-1">{cells.map((c, i) => <DeskCell key={i} {...c} />)}</div>
+  function ds(label) { return deskMap[label] || 'available' }
+  function cell(label, display) {
+    return { label, displayLabel: display || label, status: ds(label), onClick: () => onDeskClick(label, ds(label), display || label) }
   }
-  function CubRow({ cells }) {
-    return <div className="flex gap-1">{cells.map((c, i) => <CubicleCell key={i} {...c} />)}</div>
-  }
+
+  const pc1 = [15,16,17,18,19,20,21].map(i => cell(`PC ${i}`))
+  const pc2 = [22,23,24,25,26,27,28].map(i => cell(`PC ${i}`))
+  const desk1 = [29,30,31,32,33,34,35].map(i => cell(String(i).padStart(2,'0')))
+  const desk2 = [36,37,38,39,40,41,42].map(i => cell(String(i).padStart(2,'0')))
+  const desk3 = [43,44,45,46,47,48,49].map(i => cell(String(i).padStart(2,'0')))
+  const desk4 = [50,51,52,53,54,55,56].map(i => cell(String(i).padStart(2,'0')))
+
+  const cubCols = [
+    [19,20,21],[22,23,24],[25,26,27],[28,29,30],[31,32,33],[34,35,36]
+  ].map(nums => nums.map(i => cell(`Cubicle ${String(i).padStart(2,'0')}`)))
+
+  const sr = (room, n) => cell(`R-SR${room}-SD${n}`, `Study Desk ${n}`)
+
+  function Col({ cells }) { return <div className="flex flex-col gap-1">{cells.map((c,i) => <DeskCell key={i} {...c} />)}</div> }
+  function CubCol({ cells }) { return <div className="flex flex-col gap-1">{cells.map((c,i) => <CubicleCell key={i} {...c} />)}</div> }
 
   return (
     <div className="flex flex-col gap-3 mt-2">
@@ -256,31 +206,31 @@ function RightWingMap({ deskMap, onDeskClick }) {
         <div className="flex items-center justify-center flex-shrink-0" style={{ width: 70, height: 230, borderRadius: '7.55px', border: '0.94px dashed rgba(203,213,225,1)', background: 'rgba(248,250,252,1)', writingMode: 'vertical-rl', transform: 'rotate(180deg)', boxSizing: 'border-box' }}>
           <span className="text-[8px] font-bold uppercase tracking-widest text-gray-400">Reception</span>
         </div>
-        <div className="flex items-center justify-center flex-shrink-0" style={{ width: 1002, height: 230, borderRadius: '7.55px', border: '0.94px dashed rgba(203,213,225,1)', background: 'rgba(248,250,252,1)', boxSizing: 'border-box' }}>
+        <div className="flex items-center justify-center flex-shrink-0" style={{ width: 900, height: 230, borderRadius: '7.55px', border: '0.94px dashed rgba(203,213,225,1)', background: 'rgba(248,250,252,1)', boxSizing: 'border-box' }}>
           <span className="text-[10px] font-bold uppercase tracking-widest text-gray-300">Bookshelves</span>
         </div>
       </div>
       <div className="flex gap-2 items-start">
-        <PcCol cells={pcGroup1} />
-        <PcCol cells={pcGroup2} />
-        <PcCol cells={deskCol1} />
+        <Col cells={pc1} />
+        <Col cells={pc2} />
+        <Col cells={desk1} />
         <DeskDivider label="DESK" />
-        <PcCol cells={deskCol2} />
-        <PcCol cells={deskCol3} />
+        <Col cells={desk2} />
+        <Col cells={desk3} />
         <DeskDivider label="DESK" />
-        <div className="flex flex-col gap-1 ml-1">
-          <CubRow cells={cubRow1} />
-          <CubRow cells={cubRow2} />
+        <Col cells={desk4} />
+        <div className="flex gap-1 ml-1">
+          {cubCols.map((col, i) => <CubCol key={i} cells={col} />)}
         </div>
         <div className="flex flex-col gap-3 ml-4 flex-shrink-0">
           {[
-            { title: 'Collab Study Room 5', labels: study.slice(0, 3) },
-            { title: 'Collab Study Room 6', labels: study.slice(3, 6) },
+            { title: 'COLLAB STUDY ROOM 5', desks: [sr(5,1),sr(5,2),sr(5,3)] },
+            { title: 'COLLAB STUDY ROOM 6', desks: [sr(6,1),sr(6,2),sr(6,3)] },
           ].map((room, ri) => (
-            <div key={ri} className="flex flex-col items-center flex-shrink-0" style={{ width: 200, height: 215, borderRadius: '7.55px', border: '0.94px dashed rgba(203,213,225,1)', paddingTop: '20px', paddingBottom: '21px', paddingLeft: '19px', paddingRight: '19px', gap: 12, boxSizing: 'border-box' }}>
-              <p className="text-[9px] font-bold uppercase tracking-wider text-gray-400 w-full">{room.title}</p>
-              <div className="flex flex-col" style={{ gap: 12 }}>
-                {room.labels.map((l, i) => <StudyDeskBtn key={i} label={l} status={ds(l)} onClick={() => onDeskClick(l, ds(l))} />)}
+            <div key={ri} className="flex flex-col flex-shrink-0" style={{ width: 200, height: 215, borderRadius: '7.55px', border: '0.94px dashed rgba(203,213,225,1)', padding: '16px 16px 20px', gap: 10, boxSizing: 'border-box' }}>
+              <p className="text-[9px] font-bold uppercase tracking-wider text-gray-400">{room.title}</p>
+              <div className="flex flex-col" style={{ gap: 10 }}>
+                {room.desks.map((d, i) => <StudyDeskBtn key={i} {...d} />)}
               </div>
             </div>
           ))}
@@ -320,8 +270,8 @@ export default function MapPage() {
 
   useEffect(() => { loadDesks() }, [loadDesks])
 
-  function handleDeskClick(label, status) {
-    setModalDesk({ label, status })
+  function handleDeskClick(label, status, displayLabel) {
+    setModalDesk({ label, status, displayLabel })
   }
 
   async function handleCheckin(label) {
@@ -427,7 +377,9 @@ export default function MapPage() {
           <div className="bg-white flex flex-col" style={{ width:1163, minHeight:866, borderRadius:'7.55px', border:'0.94px solid rgba(198,198,205,1)', boxShadow:'0 0.94px 1.89px rgba(0,0,0,0.05)', padding:28, flexShrink:0 }}>
             <div className="mb-4 pb-4 border-b border-gray-100">
               <h2 className="text-lg font-bold text-gray-900">{activeWing === 'left' ? 'Left' : 'Right'} Wing Floorplan</h2>
-              <p className="text-[11px] text-gray-400 mt-0.5">Click any desk to check in or view status</p>
+              <p className="text-[11px] text-gray-400 mt-0.5">
+                {activeWing === 'left' ? 'PC 1-14 | Desks 01-28 | Cubicle 01-18 | Collab Study Room 1-4' : 'PC 15-28 | Desks 29-56 | Cubicle 19-36 | Collab Study Room 5-6'}
+              </p>
             </div>
             {activeWing === 'right'
               ? <RightWingMap deskMap={deskMap} onDeskClick={handleDeskClick} />
@@ -438,12 +390,7 @@ export default function MapPage() {
       </div>
 
       {modalDesk && (
-        <DeskModal
-          desk={modalDesk}
-          onClose={() => setModalDesk(null)}
-          onCheckin={handleCheckin}
-          checkinLoading={checkinLoading}
-        />
+        <DeskModal desk={modalDesk} onClose={() => setModalDesk(null)} onCheckin={handleCheckin} checkinLoading={checkinLoading} />
       )}
     </div>
   )
