@@ -71,8 +71,19 @@ function CubicleCell({ label, status = O }) {
 function DeskDivider({ label }) {
   return (
     <div
-      className="bg-gray-100 border border-gray-200 rounded flex items-center justify-center flex-shrink-0"
-      style={{ width: 16, height: 260, writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+      className="flex items-center justify-center flex-shrink-0"
+      style={{
+        width: 27,
+        height: 467,
+        borderRadius: '7.55px',
+        border: '0.94px dashed rgba(198,198,205,1)',
+        background: 'rgba(248,250,252,1)',
+        paddingLeft: '48.61px',
+        paddingRight: '50.5px',
+        writingMode: 'vertical-rl',
+        transform: 'rotate(180deg)',
+        boxSizing: 'border-box',
+      }}
     >
       <span className="text-[7px] font-bold uppercase tracking-widest text-gray-400">{label}</span>
     </div>
