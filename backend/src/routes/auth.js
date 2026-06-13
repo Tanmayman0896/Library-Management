@@ -6,7 +6,6 @@ const { requireAuth } = require('../middleware/auth');
 
 const router = express.Router();
 
-// POST /api/auth/register
 router.post('/register', async (req, res, next) => {
   try {
     const { email, password, name, role } = req.body;
@@ -25,7 +24,6 @@ router.post('/register', async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
-// POST /api/auth/login
 router.post('/login', async (req, res, next) => {
   try {
     const { email, password } = req.body;
@@ -42,7 +40,6 @@ router.post('/login', async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
-// POST /api/auth/admin-login
 router.post('/admin-login', async (req, res, next) => {
   try {
     const { email, password } = req.body;
@@ -61,7 +58,6 @@ router.post('/admin-login', async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
-// GET /api/auth/me
 router.get('/me', requireAuth, async (req, res, next) => {
   try {
     const user = await prisma.user.findUnique({

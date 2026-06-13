@@ -1,4 +1,3 @@
-// Prisma schema for DeskGuard
 generator client {
   provider = "prisma-client-js"
 }
@@ -13,7 +12,7 @@ model User {
   email     String    @unique
   password  String
   name      String
-  role      String    @default("STUDENT") // STUDENT | LIBRARIAN
+  role      String    @default("STUDENT")
   sessions  Session[]
   createdAt DateTime  @default(now())
 }
@@ -25,7 +24,7 @@ model Desk {
   type     String    @default("PC") // PC | STUDY | CUBICLE
   row      Int       @default(0)
   col      Int       @default(0)
-  status   String    @default("FREE") // FREE | OCCUPIED | AWAY | ABANDONED
+  status   String    @default("FREE")
   sessions Session[]
 }
 
@@ -33,7 +32,7 @@ model Session {
   id            String    @id @default(uuid())
   userId        String
   deskId        String
-  status        String    @default("ACTIVE") // ACTIVE | AWAY | ENDED | ABANDONED
+  status        String    @default("ACTIVE")
   startTime     DateTime  @default(now())
   awayStartTime DateTime?
   lastPingTime  DateTime  @default(now())

@@ -1,10 +1,9 @@
-const express = require('express');
+﻿const express = require('express');
 const prisma = require('../db');
 const { requireAuth } = require('../middleware/auth');
 
 const router = express.Router();
 
-// GET /api/sessions/active — current user's active session
 router.get('/active', requireAuth, async (req, res, next) => {
   try {
     const session = await prisma.session.findFirst({
@@ -18,7 +17,6 @@ router.get('/active', requireAuth, async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
-// GET /api/sessions/history — current user's past sessions
 router.get('/history', requireAuth, async (req, res, next) => {
   try {
     const sessions = await prisma.session.findMany({
@@ -31,7 +29,6 @@ router.get('/history', requireAuth, async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
-// POST /api/sessions/away — mark as stepping away
 router.post('/away', requireAuth, async (req, res, next) => {
   try {
     const session = await prisma.session.findFirst({
@@ -52,7 +49,6 @@ router.post('/away', requireAuth, async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
-// POST /api/sessions/back — mark as back from away
 router.post('/back', requireAuth, async (req, res, next) => {
   try {
     const session = await prisma.session.findFirst({
@@ -73,7 +69,6 @@ router.post('/back', requireAuth, async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
-// POST /api/sessions/confirm — respond to "Still here?" prompt (resets 2-hour timer)
 router.post('/confirm', requireAuth, async (req, res, next) => {
   try {
     const session = await prisma.session.findFirst({
@@ -90,7 +85,6 @@ router.post('/confirm', requireAuth, async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
-// POST /api/sessions/end — end session
 router.post('/end', requireAuth, async (req, res, next) => {
   try {
     const session = await prisma.session.findFirst({

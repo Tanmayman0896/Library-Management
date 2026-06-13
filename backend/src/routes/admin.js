@@ -1,10 +1,9 @@
-const express = require('express');
+﻿const express = require('express');
 const prisma = require('../db');
 const { requireLibrarian } = require('../middleware/auth');
 
 const router = express.Router();
 
-// GET /api/admin/abandoned — all abandoned desks
 router.get('/abandoned', requireLibrarian, async (req, res, next) => {
   try {
     const desks = await prisma.desk.findMany({
@@ -22,7 +21,6 @@ router.get('/abandoned', requireLibrarian, async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
-// GET /api/admin/desks — all desks with occupant info for librarian view
 router.get('/desks', requireLibrarian, async (req, res, next) => {
   try {
     const desks = await prisma.desk.findMany({
@@ -40,19 +38,16 @@ router.get('/desks', requireLibrarian, async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
-// POST /api/admin/reset/:deskId — manually free an abandoned/stuck desk
 router.post('/reset/:deskId', requireLibrarian, async (req, res, next) => {
   try {
     const desk = await prisma.desk.findUnique({ where: { id: req.params.deskId } });
     if (!desk) return res.status(404).json({ error: 'Desk not found' });
 
     await prisma.$transaction(async (tx) => {
-      // End all active/away/abandoned sessions on this desk
       await tx.session.updateMany({
         where: { deskId: desk.id, status: { in: ['ACTIVE', 'AWAY', 'ABANDONED'] } },
         data: { status: 'ENDED', endTime: new Date() },
       });
-      // Free the desk
       await tx.desk.update({ where: { id: desk.id }, data: { status: 'FREE' } });
     });
 
@@ -60,7 +55,6 @@ router.post('/reset/:deskId', requireLibrarian, async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
-// GET /api/admin/stats — library overview stats
 router.get('/stats', requireLibrarian, async (req, res, next) => {
   try {
     const [total, free, occupied, away, abandoned] = await Promise.all([

@@ -14,16 +14,13 @@ const PORT = process.env.PORT || 3001;
 app.use(cors({ origin: process.env.FRONTEND_URL || 'http://localhost:3000', credentials: true }));
 app.use(express.json());
 
-// Health check
 app.get('/api/health', (req, res) => res.json({ ok: true, time: new Date().toISOString() }));
 
-// Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/desks', deskRoutes);
 app.use('/api/sessions', sessionRoutes);
 app.use('/api/admin', adminRoutes);
 
-// Global error handler
 app.use((err, req, res, next) => {
   console.error(err);
   res.status(err.status || 500).json({ error: err.message || 'Internal server error' });
