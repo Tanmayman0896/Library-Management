@@ -203,7 +203,19 @@ function LeftWingMap() {
         </div>
 
         {/* Bookshelves */}
-        <div className="flex-1 border border-dashed border-gray-300 rounded flex items-center justify-center" style={{ height: 140 }}>
+        <div
+          className="flex items-center justify-center flex-shrink-0"
+          style={{
+            width: 580,
+            height: 230,
+            borderRadius: '7.55px',
+            border: '0.94px dashed rgba(203,213,225,1)',
+            background: 'rgba(248,250,252,1)',
+            paddingTop: '20.29px',
+            paddingBottom: '21.24px',
+            boxSizing: 'border-box',
+          }}
+        >
           <span className="text-[10px] font-bold uppercase tracking-widest text-gray-300">Bookshelves</span>
         </div>
 
