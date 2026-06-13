@@ -5,58 +5,92 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-white flex flex-col">
       {/* Navbar */}
-      <nav className="flex items-center justify-between px-8 py-5">
+      <nav className="flex items-center justify-between px-[110px] py-6">
         <Image
           src="/logo.svg"
-          alt="StudySpace"
-          width={120}
+          alt="DeskGuard"
+          width={56}
           height={40}
           priority
         />
         <Link
           href="/login"
-          className="text-sm font-semibold border border-black px-5 py-2 rounded-full hover:bg-black hover:text-white transition-colors"
+          className="flex items-center gap-2 text-sm font-medium border border-black px-5 py-2 rounded-md hover:bg-black hover:text-white transition-colors"
         >
-          Sign In
+          {/* Person icon */}
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="12" cy="8" r="4" />
+            <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
+          </svg>
+          Login
         </Link>
       </nav>
 
-      {/* Hero */}
-      <main className="flex flex-1 items-center justify-between px-12 lg:px-20 pb-10">
-        {/* Left — copy */}
-        <div className="max-w-xl">
-          <p className="text-xs font-semibold tracking-widest uppercase text-gray-400 mb-4">
-            StudySpace
-          </p>
-          <h1 className="text-5xl lg:text-6xl font-extrabold leading-tight text-black mb-6">
-            Fair Study Spaces<br />for Everyone.
+      {/* Hero — matches Figma: 898px content, left 110px, top 220px from page top */}
+      <main className="flex flex-1 items-center px-[110px] pt-[60px] pb-[60px]">
+        {/* Left — copy, max ~500px */}
+        <div className="flex-1 max-w-[500px]">
+          {/* DeskGuard badge */}
+          <div className="inline-flex items-center gap-1.5 border border-gray-300 rounded-sm px-2.5 py-1 mb-6">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+              <path d="M14 14h3v3M17 14h3M14 17v3"/>
+            </svg>
+            <span className="text-xs font-medium text-black">DeskGuard</span>
+          </div>
+
+          <h1 className="text-[52px] font-extrabold leading-[1.1] tracking-tight text-black mb-5">
+            Fair Study Spaces for<br />Everyone.
           </h1>
-          <p className="text-gray-500 text-base leading-relaxed mb-10 max-w-sm">
-            Find open spots, book your place, and never lose your study space again. Real-time desk availability — no more bag-saving.
+
+          <p className="text-[15px] text-gray-500 leading-relaxed mb-10 max-w-[430px]">
+            The real-time desk management system that ends desk-hogging. Find a spot, scan in, and focus on what matters.
           </p>
-          <div className="flex gap-4">
+
+          {/* CTA buttons */}
+          <div className="flex gap-4 mb-12">
             <Link
-              href="/signup"
-              className="bg-black text-white text-sm font-semibold px-6 py-3 rounded-full hover:bg-gray-800 transition-colors"
+              href="/scan"
+              className="flex items-center gap-2 bg-black text-white text-sm font-semibold px-6 py-3 rounded-md hover:bg-gray-800 transition-colors"
             >
-              Sign Up
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+                <path d="M14 14h3v3M17 14h3M14 17v3"/>
+              </svg>
+              Scan QR Code
             </Link>
             <Link
-              href="/login"
-              className="border border-black text-black text-sm font-semibold px-6 py-3 rounded-full hover:bg-black hover:text-white transition-colors"
+              href="/map"
+              className="flex items-center gap-2 border border-black text-black text-sm font-semibold px-6 py-3 rounded-md hover:bg-black hover:text-white transition-colors"
             >
-              Sign In
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/>
+                <line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/>
+              </svg>
+              View Live Map
             </Link>
+          </div>
+
+          {/* Stats row */}
+          <div className="flex gap-12 pt-6 border-t border-gray-200">
+            <div>
+              <p className="text-base font-bold text-black">Live</p>
+              <p className="text-xs text-gray-400 mt-0.5">Real-time availability</p>
+            </div>
+            <div>
+              <p className="text-base font-bold text-black">Fair</p>
+              <p className="text-xs text-gray-400 mt-0.5">Anti-hogging policies</p>
+            </div>
           </div>
         </div>
 
-        {/* Right — illustration */}
-        <div className="hidden lg:block flex-shrink-0">
+        {/* Right — illustration, pushed to right edge */}
+        <div className="flex-shrink-0 ml-auto">
           <Image
             src="/human.svg"
             alt="Student studying illustration"
-            width={380}
-            height={480}
+            width={340}
+            height={420}
             priority
           />
         </div>
