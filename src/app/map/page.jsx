@@ -233,7 +233,7 @@ function LeftWingMap() {
               width: 200,
               height: 230,
               borderRadius: '7.55px',
-              border: '0.94px dashed rgba(198,198,205,1)',
+              border: '0.94px dashed rgba(203,213,225,1)',
               paddingTop: '20.29px',
               paddingBottom: '21.24px',
               paddingLeft: '19px',
