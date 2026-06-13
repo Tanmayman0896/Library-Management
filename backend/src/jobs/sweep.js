@@ -8,7 +8,6 @@ async function sweep() {
   const now = new Date();
 
   try {
-    // ── 1. Expire AWAY sessions that exceeded the away timeout ─────────
     const awayDeadline = new Date(now.getTime() - AWAY_TIMEOUT_MS);
     const expiredAway = await prisma.session.findMany({
       where: { status: 'AWAY', awayStartTime: { lte: awayDeadline } },
@@ -23,7 +22,6 @@ async function sweep() {
       console.log(`[sweep] Session ${s.id} abandoned (away timeout exceeded)`);
     }
 
-    // ── 2. Expire ACTIVE sessions where "Still here?" went unanswered ──
     const pingDeadline = new Date(now.getTime() - PING_TIMEOUT_MS);
     const expiredActive = await prisma.session.findMany({
       where: { status: 'ACTIVE', lastPingTime: { lte: pingDeadline } },
@@ -47,10 +45,8 @@ async function sweep() {
 }
 
 function startSweepJob() {
-  // Run every minute
   cron.schedule('* * * * *', sweep);
   console.log('[sweep] Background sweep job started (runs every minute)');
-  // Also run immediately on startup
   sweep();
 }
 
