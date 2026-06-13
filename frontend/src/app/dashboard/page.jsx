@@ -70,12 +70,18 @@ export default function Dashboard() {
   const ping = usePingCountdown(session?.lastPingTime)
 
   const load = useCallback(async () => {
+    const token = typeof window !== 'undefined' && localStorage.getItem('deskguard_token')
+    if (!token) { router.replace('/login'); return }
     try {
       const [active, hist] = await Promise.all([getActiveSession(), getSessionHistory()])
       setSession(active)
       setHistory((hist || []).filter(s => s.status !== 'ACTIVE' && s.status !== 'AWAY').slice(0, 3))
-    } catch { /* not logged in */ } finally { setLoading(false) }
-  }, [])
+    } catch (e) {
+      if (e.message?.includes('401') || e.message?.includes('Invalid') || e.message?.includes('expired')) {
+        router.replace('/login')
+      }
+    } finally { setLoading(false) }
+  }, [router])
 
   useEffect(() => { load() }, [load])
 
