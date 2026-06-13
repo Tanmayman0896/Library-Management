@@ -72,7 +72,6 @@ export default function SignupPage() {
                 placeholder="First Name"
                 value={form.firstName}
                 onChange={handleChange}
-                required
                 className="w-full bg-[#F0EFEA] border border-gray-200 text-black placeholder-gray-400 text-[15px] rounded-2xl px-5 py-4 outline-none focus:border-gray-400 transition-colors"
               />
               <input
@@ -81,7 +80,6 @@ export default function SignupPage() {
                 placeholder="Last Name"
                 value={form.lastName}
                 onChange={handleChange}
-                required
                 className="w-full bg-[#F0EFEA] border border-gray-200 text-black placeholder-gray-400 text-[15px] rounded-2xl px-5 py-4 outline-none focus:border-gray-400 transition-colors"
               />
               <input
@@ -90,7 +88,6 @@ export default function SignupPage() {
                 placeholder="Email Address"
                 value={form.email}
                 onChange={handleChange}
-                required
                 className="w-full bg-[#F0EFEA] border border-gray-200 text-black placeholder-gray-400 text-[15px] rounded-2xl px-5 py-4 outline-none focus:border-gray-400 transition-colors"
               />
 
@@ -117,7 +114,6 @@ export default function SignupPage() {
                 placeholder="Student ID"
                 value={form.studentId}
                 onChange={handleChange}
-                required
                 className="w-full bg-[#F0EFEA] border border-gray-200 text-black placeholder-gray-400 text-[15px] rounded-2xl px-5 py-4 outline-none focus:border-gray-400 transition-colors"
               />
               <input
@@ -126,7 +122,6 @@ export default function SignupPage() {
                 placeholder="Password"
                 value={form.password}
                 onChange={handleChange}
-                required
                 className="w-full bg-[#F0EFEA] border border-gray-200 text-black placeholder-gray-400 text-[15px] rounded-2xl px-5 py-4 outline-none focus:border-gray-400 transition-colors"
               />
               <input
@@ -135,7 +130,6 @@ export default function SignupPage() {
                 placeholder="Confirm Password"
                 value={form.confirmPassword}
                 onChange={handleChange}
-                required
                 className="w-full bg-[#F0EFEA] border border-gray-200 text-black placeholder-gray-400 text-[15px] rounded-2xl px-5 py-4 outline-none focus:border-gray-400 transition-colors"
               />
 
@@ -165,3 +159,4 @@ export default function SignupPage() {
     </div>
   )
 }
+
