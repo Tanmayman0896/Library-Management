@@ -37,7 +37,6 @@ app.use((err, req, res, next) => {
 });
 
 if (process.env.VERCEL) {
-  startSweepJob();
   module.exports = app;
 } else {
   app.listen(PORT, () => {

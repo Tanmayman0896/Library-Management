@@ -45,6 +45,7 @@ async function sweep() {
 }
 
 function startSweepJob() {
+  if (process.env.VERCEL) return;
   cron.schedule('* * * * *', sweep);
   console.log('[sweep] Background sweep job started (runs every minute)');
   sweep();
