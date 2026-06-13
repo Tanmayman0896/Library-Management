@@ -196,8 +196,19 @@ function LeftWingMap() {
       <div className="flex gap-3 items-stretch mt-1">
         {/* Reception */}
         <div
-          className="border border-dashed border-gray-300 rounded flex items-center justify-center flex-shrink-0"
-          style={{ width: 56, height: 140, writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+          className="flex items-center justify-center flex-shrink-0"
+          style={{
+            width: 70,
+            height: 230,
+            borderRadius: '7.55px',
+            border: '0.94px dashed rgba(203,213,225,1)',
+            background: 'rgba(248,250,252,1)',
+            paddingLeft: '48.61px',
+            paddingRight: '50.5px',
+            writingMode: 'vertical-rl',
+            transform: 'rotate(180deg)',
+            boxSizing: 'border-box',
+          }}
         >
           <span className="text-[8px] font-bold uppercase tracking-widest text-gray-400">Reception</span>
         </div>
