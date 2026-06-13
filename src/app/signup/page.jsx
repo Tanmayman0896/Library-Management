@@ -4,9 +4,12 @@ import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { register } from '@/lib/api'
 
 export default function SignupPage() {
   const [step, setStep] = useState(1)
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
   const router = useRouter()
   const [form, setForm] = useState({
     firstName: '',
@@ -26,10 +29,22 @@ export default function SignupPage() {
     setStep(2)
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
-    sessionStorage.setItem('deskguard_session', '1')
-    router.push('/map')
+    if (form.password !== form.confirmPassword) {
+      setError('Passwords do not match')
+      return
+    }
+    setError('')
+    setLoading(true)
+    try {
+      await register(form.email, form.password, `${form.firstName} ${form.lastName}`)
+      router.push('/map')
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -134,10 +149,12 @@ export default function SignupPage() {
               />
 
               {/* Arrow submit button */}
-              <div className="flex justify-center mt-4">
+              <div className="flex flex-col items-center mt-4 gap-3">
+                {error && <p className="text-sm text-red-600 text-center">{error}</p>}
                 <button
                   type="submit"
-                  className="border border-black rounded-lg px-12 py-4 hover:bg-black hover:text-white transition-colors"
+                  disabled={loading}
+                  className="border border-black rounded-lg px-12 py-4 hover:bg-black hover:text-white transition-colors disabled:opacity-50"
                 >
                   <svg width="24" height="14" viewBox="0 0 24 14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <line x1="0" y1="7" x2="22" y2="7"/>
