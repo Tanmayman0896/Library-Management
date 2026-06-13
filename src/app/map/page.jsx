@@ -475,56 +475,64 @@ export default function MapPage() {
       <div className="flex flex-1 overflow-hidden">
 
         {/* Sidebar */}
-        <aside className="w-52 bg-white border-r border-gray-200 flex flex-col flex-shrink-0 overflow-y-auto">
-          <div className="p-4 flex flex-col gap-4">
+        <aside
+          className="flex flex-col flex-shrink-0 overflow-y-auto"
+          style={{
+            width: 320,
+            minHeight: 897,
+            background: 'rgba(252,248,250,1)',
+            borderRight: '1px solid rgba(198,198,205,1)',
+          }}
+        >
+          <div className="p-6 flex flex-col gap-5">
             <div>
-              <p className="text-[11px] font-bold text-gray-800">Main Library</p>
-              <div className="flex gap-1 flex-wrap mt-1.5">
-                <span className="bg-gray-800 text-white text-[9px] px-2 py-0.5 rounded-full font-medium">Dome Building</span>
-                <span className="bg-gray-100 text-gray-500 text-[9px] px-2 py-0.5 rounded-full font-medium">Ground Floor</span>
+              <p className="text-[13px] font-bold text-gray-800">Main Library</p>
+              <div className="flex gap-1.5 flex-wrap mt-2">
+                <span className="bg-gray-800 text-white text-[10px] px-2.5 py-0.5 rounded-full font-medium">Dome Building</span>
+                <span className="bg-gray-100 text-gray-500 text-[10px] px-2.5 py-0.5 rounded-full font-medium">Ground Floor</span>
               </div>
             </div>
-            <hr className="border-gray-100" />
+            <hr className="border-gray-200" />
             <div>
-              <p className="text-[9px] font-bold uppercase tracking-wider text-gray-400 mb-2">Current Occupancy</p>
-              <p className={`text-3xl font-extrabold leading-none ${pctColor}`}>
-                {meta.occupancy}% <span className="text-sm font-semibold text-gray-500">Full</span>
+              <p className="text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-2.5">Current Occupancy</p>
+              <p className={`text-4xl font-extrabold leading-none ${pctColor}`}>
+                {meta.occupancy}% <span className="text-base font-semibold text-gray-500">Full</span>
               </p>
-              <div className="flex gap-2 mt-3">
-                <div className="flex-1 bg-gray-50 rounded-lg p-2 border border-gray-100">
-                  <p className="text-[9px] text-gray-400 leading-tight">Available Desks</p>
-                  <p className="text-lg font-extrabold text-black leading-tight mt-0.5">{meta.availableDesks}</p>
+              <div className="flex gap-2.5 mt-4">
+                <div className="flex-1 bg-white rounded-xl p-3 border border-gray-100 shadow-sm">
+                  <p className="text-[10px] text-gray-400 leading-tight">Available Desks</p>
+                  <p className="text-2xl font-extrabold text-black leading-tight mt-1">{meta.availableDesks}</p>
                 </div>
-                <div className="flex-1 bg-gray-50 rounded-lg p-2 border border-gray-100">
-                  <p className="text-[9px] text-gray-400 leading-tight">Avg. Wait Time</p>
-                  <p className="text-lg font-extrabold text-black leading-tight mt-0.5">{meta.avgWaitTime}</p>
+                <div className="flex-1 bg-white rounded-xl p-3 border border-gray-100 shadow-sm">
+                  <p className="text-[10px] text-gray-400 leading-tight">Avg. Wait Time</p>
+                  <p className="text-2xl font-extrabold text-black leading-tight mt-1">{meta.avgWaitTime}</p>
                 </div>
               </div>
             </div>
-            <hr className="border-gray-100" />
+            <hr className="border-gray-200" />
             <div>
-              <p className="text-[9px] font-bold uppercase tracking-wider text-gray-400 mb-2">Legend</p>
-              <div className="flex flex-col gap-2">
+              <p className="text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-3">Legend</p>
+              <div className="flex flex-col gap-2.5">
                 {[['bg-green-300','Available'],['bg-red-300','Occupied'],['bg-yellow-300','Away']].map(([cls,lbl])=>(
-                  <div key={lbl} className="flex items-center gap-2">
-                    <span className={`w-3 h-3 rounded-sm ${cls} flex-shrink-0`} />
-                    <span className="text-[11px] text-gray-600">{lbl}</span>
-                    {lbl === 'Away' && <span className="ml-auto text-[8px] bg-gray-100 text-gray-400 px-1.5 py-0.5 rounded-full border border-gray-200">Ding-Ding</span>}
+                  <div key={lbl} className="flex items-center gap-2.5">
+                    <span className={`w-3.5 h-3.5 rounded-sm ${cls} flex-shrink-0`} />
+                    <span className="text-[12px] text-gray-600">{lbl}</span>
+                    {lbl === 'Away' && <span className="ml-auto text-[9px] bg-gray-100 text-gray-400 px-2 py-0.5 rounded-full border border-gray-200">Ding-Ding</span>}
                   </div>
                 ))}
               </div>
             </div>
-            <hr className="border-gray-100" />
+            <hr className="border-gray-200" />
             <div>
-              <p className="text-[9px] font-bold uppercase tracking-wider text-gray-400 mb-2">Quick Navigation</p>
-              <div className="flex flex-col gap-1">
+              <p className="text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-3">Quick Navigation</p>
+              <div className="flex flex-col gap-1.5">
                 {[{key:'right',label:'Right Wing'},{key:'left',label:'Left Wing'}].map(({key,label})=>(
                   <button key={key} onClick={() => setActiveWing(key)}
-                    className={`flex items-center justify-between text-[11px] font-medium px-2.5 py-2 rounded-md transition-colors ${activeWing===key?'bg-gray-900 text-white':'hover:bg-gray-100 text-gray-700'}`}>
+                    className={`flex items-center justify-between text-[12px] font-medium px-3 py-2.5 rounded-lg transition-colors ${activeWing===key?'bg-gray-900 text-white':'hover:bg-gray-100 text-gray-700'}`}>
                     {label}
                     {activeWing===key
-                      ? <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-                      : <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                      ? <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                      : <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
                     }
                   </button>
                 ))}
