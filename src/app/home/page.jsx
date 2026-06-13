@@ -9,9 +9,10 @@ export default function HomePage() {
         <Image
           src="/full-logo.svg"
           alt="DeskGuard"
-          width={72}
-          height={52}
+          width={83}
+          height={61}
           priority
+          style={{ transform: 'rotate(-0.65deg)' }}
         />
         <Link
           href="/login"
