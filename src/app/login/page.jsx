@@ -32,6 +32,7 @@ export default function LoginPage() {
           width={480}
           height={360}
           priority
+          style={{ filter: 'invert(1)' }}
         />
       </div>
 

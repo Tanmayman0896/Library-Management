@@ -47,6 +47,7 @@ export default function SignupPage() {
           width={480}
           height={360}
           priority
+          style={{ filter: 'invert(1)' }}
         />
       </div>
 
