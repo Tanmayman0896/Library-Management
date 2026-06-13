@@ -27,33 +27,33 @@ export default function HomePage() {
       </nav>
 
       {/* Hero — matches Figma: 898px content, left 110px, top 220px from page top */}
-      <main className="flex flex-1 items-center px-[110px] pt-[60px] pb-[60px]">
-        {/* Left — copy, max ~500px */}
-        <div className="flex-1 max-w-[500px]">
+      <main className="flex flex-1 items-center px-[110px] pt-[80px] pb-[80px]">
+        {/* Left — copy, max ~560px */}
+        <div className="flex-1 max-w-[560px]">
           {/* DeskGuard badge */}
-          <div className="inline-flex items-center gap-1.5 border border-gray-300 rounded-sm px-2.5 py-1 mb-6">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <div className="inline-flex items-center gap-2 border border-gray-300 rounded-sm px-3 py-1.5 mb-8">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
               <path d="M14 14h3v3M17 14h3M14 17v3"/>
             </svg>
-            <span className="text-xs font-medium text-black">DeskGuard</span>
+            <span className="text-sm font-medium text-black">DeskGuard</span>
           </div>
 
-          <h1 className="text-[52px] font-extrabold leading-[1.1] tracking-tight text-black mb-5">
+          <h1 className="text-[72px] font-extrabold leading-[1.05] tracking-tight text-black mb-6">
             Fair Study Spaces for<br />Everyone.
           </h1>
 
-          <p className="text-[15px] text-gray-500 leading-relaxed mb-10 max-w-[430px]">
+          <p className="text-[17px] text-gray-500 leading-relaxed mb-12 max-w-[500px]">
             The real-time desk management system that ends desk-hogging. Find a spot, scan in, and focus on what matters.
           </p>
 
           {/* CTA buttons */}
-          <div className="flex gap-4 mb-12">
+          <div className="flex gap-4 mb-14">
             <Link
               href="/scan"
-              className="flex items-center gap-2 bg-black text-white text-sm font-semibold px-6 py-3 rounded-md hover:bg-gray-800 transition-colors"
+              className="flex items-center gap-2.5 bg-black text-white text-base font-semibold px-8 py-4 rounded-md hover:bg-gray-800 transition-colors"
             >
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
                 <path d="M14 14h3v3M17 14h3M14 17v3"/>
               </svg>
@@ -61,9 +61,9 @@ export default function HomePage() {
             </Link>
             <Link
               href="/map"
-              className="flex items-center gap-2 border border-black text-black text-sm font-semibold px-6 py-3 rounded-md hover:bg-black hover:text-white transition-colors"
+              className="flex items-center gap-2.5 border border-black text-black text-base font-semibold px-8 py-4 rounded-md hover:bg-black hover:text-white transition-colors"
             >
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/>
                 <line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/>
               </svg>
@@ -72,14 +72,14 @@ export default function HomePage() {
           </div>
 
           {/* Stats row */}
-          <div className="flex gap-12 pt-6 border-t border-gray-200">
+          <div className="flex gap-16 pt-7 border-t border-gray-200">
             <div>
-              <p className="text-base font-bold text-black">Live</p>
-              <p className="text-xs text-gray-400 mt-0.5">Real-time availability</p>
+              <p className="text-lg font-bold text-black">Live</p>
+              <p className="text-sm text-gray-400 mt-1">Real-time availability</p>
             </div>
             <div>
-              <p className="text-base font-bold text-black">Fair</p>
-              <p className="text-xs text-gray-400 mt-0.5">Anti-hogging policies</p>
+              <p className="text-lg font-bold text-black">Fair</p>
+              <p className="text-sm text-gray-400 mt-1">Anti-hogging policies</p>
             </div>
           </div>
         </div>
@@ -89,8 +89,8 @@ export default function HomePage() {
           <Image
             src="/human.svg"
             alt="Student studying illustration"
-            width={340}
-            height={420}
+            width={460}
+            height={560}
             priority
           />
         </div>
