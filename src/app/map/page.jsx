@@ -381,15 +381,15 @@ function RightWingMap() {
 
         <div className="flex flex-col gap-3 ml-4 flex-shrink-0">
           {[
-            { title: 'Collab Study Room 5', desks: [{s:O},{s:O},{s:O}], h: 286 },
-            { title: 'Collab Study Room 6', desks: [{s:O},{s:A},{s:A}], h: 145 },
+            { title: 'Collab Study Room 5', desks: [{s:O},{s:O},{s:O}] },
+            { title: 'Collab Study Room 6', desks: [{s:O},{s:A},{s:A}] },
           ].map((room, ri) => (
             <div
               key={ri}
               className="flex flex-col items-center flex-shrink-0"
               style={{
                 width: 200,
-                height: room.h,
+                height: 215,
                 borderRadius: '7.55px',
                 border: '0.94px dashed rgba(203,213,225,1)',
                 paddingTop: '20.29px',
