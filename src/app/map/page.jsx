@@ -517,7 +517,7 @@ export default function MapPage() {
                   <div key={lbl} className="flex items-center gap-2.5">
                     <span className={`w-3.5 h-3.5 rounded-sm ${cls} flex-shrink-0`} />
                     <span className="text-[12px] text-gray-600">{lbl}</span>
-                    {lbl === 'Away' && <span className="ml-auto text-[9px] bg-gray-100 text-gray-400 px-2 py-0.5 rounded-full border border-gray-200">Ding-Ding</span>}
+                    {lbl === 'Away' && <span className="ml-auto text-[9px] bg-gray-100 text-gray-400 px-2 py-0.5 rounded-full border border-gray-200">20m limit</span>}
                   </div>
                 ))}
               </div>
@@ -542,8 +542,8 @@ export default function MapPage() {
         </aside>
 
         {/* Main */}
-        <main className="flex-1 overflow-auto bg-gray-50 p-6 flex items-start justify-center">
-          <div className="bg-white flex flex-col" style={{ width:1163, minHeight:866, borderRadius:'7.55px', border:'0.94px solid rgba(198,198,205,1)', boxShadow:'0 0.94px 1.89px rgba(0,0,0,0.05)', padding:28, flexShrink:0 }}>
+        <main className="flex-1 overflow-auto bg-gray-50 p-6 flex items-start justify-start">
+          <div className="bg-white flex flex-col" style={{ width:'fit-content', minWidth:866, minHeight:866, borderRadius:'7.55px', border:'0.94px solid rgba(198,198,205,1)', boxShadow:'0 0.94px 1.89px rgba(0,0,0,0.05)', padding:28, flexShrink:0 }}>
             <div className="mb-4 pb-4 border-b border-gray-100">
               <h2 className="text-lg font-bold text-gray-900">{meta.name} Floorplan</h2>
               <p className="text-[11px] text-gray-400 mt-0.5">{meta.subtitle}</p>
