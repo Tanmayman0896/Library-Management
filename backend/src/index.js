@@ -26,7 +26,12 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500).json({ error: err.message || 'Internal server error' });
 });
 
-app.listen(PORT, () => {
-  console.log(`DeskGuard backend running on http://localhost:${PORT}`);
+if (process.env.VERCEL) {
   startSweepJob();
-});
+  module.exports = app;
+} else {
+  app.listen(PORT, () => {
+    console.log(`DeskGuard backend running on http://localhost:${PORT}`);
+    startSweepJob();
+  });
+}
