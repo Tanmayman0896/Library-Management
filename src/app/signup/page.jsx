@@ -7,10 +7,11 @@ import Link from 'next/link'
 export default function SignupPage() {
   const [step, setStep] = useState(1)
   const [form, setForm] = useState({
-    name: '',
+    firstName: '',
+    lastName: '',
     email: '',
-    password: '',
     studentId: '',
+    password: '',
     confirmPassword: '',
   })
 
@@ -29,112 +30,125 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="min-h-screen bg-black flex flex-col items-center justify-center px-4">
-      {/* Logo */}
-      <div className="mb-8">
+    <div className="flex min-h-screen">
+      {/* Left — black panel with white logo */}
+      <div className="w-[55%] bg-black flex items-center justify-center flex-shrink-0">
         <Image
           src="/white-logo.svg"
-          alt="StudySpace"
-          width={80}
-          height={80}
+          alt="DeskGuard"
+          width={320}
+          height={240}
           priority
         />
       </div>
 
-      {/* Card */}
-      <div className="w-full max-w-sm">
-        <h1 className="text-white text-2xl font-bold text-center mb-2">
-          Create New Account
-        </h1>
+      {/* Right — off-white form panel */}
+      <div className="flex-1 bg-[#F5F5F0] flex items-center justify-center px-16">
+        <div className="w-full max-w-[400px]">
+          <h1 className="text-[42px] font-extrabold text-black mb-3 tracking-tight">
+            Create New Account
+          </h1>
+          <p className="text-[15px] text-gray-500 mb-10">
+            Please provide your information to sign up.
+          </p>
 
-        {/* Step indicator */}
-        <div className="flex items-center justify-center gap-2 mb-8">
-          <div className={`h-1.5 w-10 rounded-full ${step >= 1 ? 'bg-white' : 'bg-zinc-700'}`} />
-          <div className={`h-1.5 w-10 rounded-full ${step >= 2 ? 'bg-white' : 'bg-zinc-700'}`} />
+          {step === 1 && (
+            <form onSubmit={handleNext} className="flex flex-col gap-4">
+              <input
+                type="text"
+                name="firstName"
+                placeholder="First Name"
+                value={form.firstName}
+                onChange={handleChange}
+                required
+                className="w-full bg-[#F0EFEA] border border-gray-200 text-black placeholder-gray-400 text-[15px] rounded-2xl px-5 py-4 outline-none focus:border-gray-400 transition-colors"
+              />
+              <input
+                type="text"
+                name="lastName"
+                placeholder="Last Name"
+                value={form.lastName}
+                onChange={handleChange}
+                required
+                className="w-full bg-[#F0EFEA] border border-gray-200 text-black placeholder-gray-400 text-[15px] rounded-2xl px-5 py-4 outline-none focus:border-gray-400 transition-colors"
+              />
+              <input
+                type="email"
+                name="email"
+                placeholder="Email Address"
+                value={form.email}
+                onChange={handleChange}
+                required
+                className="w-full bg-[#F0EFEA] border border-gray-200 text-black placeholder-gray-400 text-[15px] rounded-2xl px-5 py-4 outline-none focus:border-gray-400 transition-colors"
+              />
+
+              {/* Arrow submit button */}
+              <div className="flex justify-center mt-4">
+                <button
+                  type="submit"
+                  className="border border-black rounded-lg px-12 py-4 hover:bg-black hover:text-white transition-colors"
+                >
+                  <svg width="24" height="14" viewBox="0 0 24 14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="0" y1="7" x2="22" y2="7"/>
+                    <polyline points="16 1 22 7 16 13"/>
+                  </svg>
+                </button>
+              </div>
+            </form>
+          )}
+
+          {step === 2 && (
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+              <input
+                type="text"
+                name="studentId"
+                placeholder="Student ID"
+                value={form.studentId}
+                onChange={handleChange}
+                required
+                className="w-full bg-[#F0EFEA] border border-gray-200 text-black placeholder-gray-400 text-[15px] rounded-2xl px-5 py-4 outline-none focus:border-gray-400 transition-colors"
+              />
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                value={form.password}
+                onChange={handleChange}
+                required
+                className="w-full bg-[#F0EFEA] border border-gray-200 text-black placeholder-gray-400 text-[15px] rounded-2xl px-5 py-4 outline-none focus:border-gray-400 transition-colors"
+              />
+              <input
+                type="password"
+                name="confirmPassword"
+                placeholder="Confirm Password"
+                value={form.confirmPassword}
+                onChange={handleChange}
+                required
+                className="w-full bg-[#F0EFEA] border border-gray-200 text-black placeholder-gray-400 text-[15px] rounded-2xl px-5 py-4 outline-none focus:border-gray-400 transition-colors"
+              />
+
+              {/* Arrow submit button */}
+              <div className="flex justify-center mt-4">
+                <button
+                  type="submit"
+                  className="border border-black rounded-lg px-12 py-4 hover:bg-black hover:text-white transition-colors"
+                >
+                  <svg width="24" height="14" viewBox="0 0 24 14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="0" y1="7" x2="22" y2="7"/>
+                    <polyline points="16 1 22 7 16 13"/>
+                  </svg>
+                </button>
+              </div>
+            </form>
+          )}
+
+          <p className="text-[15px] text-gray-500 text-center mt-10">
+            Already have an Account?{' '}
+            <Link href="/login" className="text-black font-bold hover:underline">
+              Sign In now.
+            </Link>
+          </p>
         </div>
-
-        {step === 1 && (
-          <form onSubmit={handleNext} className="flex flex-col gap-4">
-            <input
-              type="text"
-              name="name"
-              placeholder="Full name"
-              value={form.name}
-              onChange={handleChange}
-              required
-              className="w-full bg-zinc-900 border border-zinc-700 text-white placeholder-zinc-500 text-sm rounded-xl px-4 py-3 outline-none focus:border-white transition-colors"
-            />
-            <input
-              type="email"
-              name="email"
-              placeholder="Email address"
-              value={form.email}
-              onChange={handleChange}
-              required
-              className="w-full bg-zinc-900 border border-zinc-700 text-white placeholder-zinc-500 text-sm rounded-xl px-4 py-3 outline-none focus:border-white transition-colors"
-            />
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              value={form.password}
-              onChange={handleChange}
-              required
-              className="w-full bg-zinc-900 border border-zinc-700 text-white placeholder-zinc-500 text-sm rounded-xl px-4 py-3 outline-none focus:border-white transition-colors"
-            />
-            <button
-              type="submit"
-              className="w-full bg-white text-black font-semibold text-sm py-3 rounded-xl mt-2 hover:bg-gray-200 transition-colors"
-            >
-              Continue
-            </button>
-          </form>
-        )}
-
-        {step === 2 && (
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            <input
-              type="text"
-              name="studentId"
-              placeholder="Student ID"
-              value={form.studentId}
-              onChange={handleChange}
-              required
-              className="w-full bg-zinc-900 border border-zinc-700 text-white placeholder-zinc-500 text-sm rounded-xl px-4 py-3 outline-none focus:border-white transition-colors"
-            />
-            <input
-              type="password"
-              name="confirmPassword"
-              placeholder="Confirm password"
-              value={form.confirmPassword}
-              onChange={handleChange}
-              required
-              className="w-full bg-zinc-900 border border-zinc-700 text-white placeholder-zinc-500 text-sm rounded-xl px-4 py-3 outline-none focus:border-white transition-colors"
-            />
-            <div className="flex gap-3 mt-2">
-              <button
-                type="button"
-                onClick={() => setStep(1)}
-                className="flex-1 border border-zinc-700 text-white font-semibold text-sm py-3 rounded-xl hover:border-white transition-colors"
-              >
-                Back
-              </button>
-              <button
-                type="submit"
-                className="flex-1 bg-white text-black font-semibold text-sm py-3 rounded-xl hover:bg-gray-200 transition-colors"
-              >
-                Sign Up
-              </button>
-            </div>
-          </form>
-        )}
-
-        <p className="text-zinc-500 text-sm text-center mt-6">
-          Already have an account?{' '}
-          <Link href="/login" className="text-white font-semibold hover:underline">
-            Sign in
-          </Link>
-        </p>
       </div>
     </div>
   )
