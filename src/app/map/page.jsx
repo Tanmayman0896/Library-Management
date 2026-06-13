@@ -78,9 +78,26 @@ function DeskDivider({ label }) {
     </div>
   )
 }
+const STUDY_STYLE = {
+  available: { background: 'rgba(240,253,244,1)', border: '0.94px solid rgba(134,239,172,1)', color: '#166534' },
+  occupied:  { background: 'rgba(254,242,242,1)', border: '0.94px solid rgba(254,202,202,1)', color: '#991b1b' },
+  away:      { background: 'rgba(254,252,232,1)', border: '0.94px solid rgba(253,224,71,1)',  color: '#854d0e' },
+}
 function StudyDeskBtn({ label, status }) {
+  const s = STUDY_STYLE[status] || STUDY_STYLE.occupied
   return (
-    <div className={`text-[11px] font-semibold px-4 py-2.5 rounded-lg cursor-pointer hover:opacity-80 transition-opacity text-center ${STUDY_CLS[status]}`}>
+    <div
+      className="flex items-center justify-center cursor-pointer select-none hover:opacity-80 transition-opacity text-[11px] font-semibold"
+      style={{
+        width: 162,
+        height: 42,
+        borderRadius: '3.78px',
+        border: s.border,
+        background: s.background,
+        color: s.color,
+        flexShrink: 0,
+      }}
+    >
       {label}
     </div>
   )
@@ -186,9 +203,24 @@ function LeftWingMap() {
           { title: 'Collab Study Room 3', desks: [{s:A},{s:A},{s:A}] },
           { title: 'Collab Study Room 4', desks: [{s:O},{s:O},{s:A}] },
         ].map((room, ri) => (
-          <div key={ri} className="flex-shrink-0 w-[130px]">
-            <p className="text-[8px] font-bold uppercase tracking-wider text-gray-400 mb-1.5">{room.title}</p>
-            <div className="flex flex-col gap-1.5">
+          <div
+            key={ri}
+            className="flex flex-col items-center flex-shrink-0"
+            style={{
+              width: 200,
+              height: 230,
+              borderRadius: '7.55px',
+              border: '0.94px dashed rgba(198,198,205,1)',
+              paddingTop: '20.29px',
+              paddingBottom: '21.24px',
+              paddingLeft: '19px',
+              paddingRight: '19px',
+              gap: 12,
+              boxSizing: 'border-box',
+            }}
+          >
+            <p className="text-[9px] font-bold uppercase tracking-wider text-gray-400 w-full">{room.title}</p>
+            <div className="flex flex-col" style={{ gap: 12 }}>
               {room.desks.map((d,i) => <StudyDeskBtn key={i} label={`Study Desk ${i+1}`} status={d.s} />)}
             </div>
           </div>
