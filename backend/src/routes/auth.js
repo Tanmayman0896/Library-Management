@@ -42,6 +42,25 @@ router.post('/login', async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
+// POST /api/auth/admin-login
+router.post('/admin-login', async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) return res.status(400).json({ error: 'email and password required' });
+
+    const user = await prisma.user.findUnique({ where: { email } });
+    if (!user) return res.status(401).json({ error: 'Invalid credentials' });
+
+    if (user.role !== 'LIBRARIAN') return res.status(403).json({ error: 'Access denied: admin only' });
+
+    const match = await bcrypt.compare(password, user.password);
+    if (!match) return res.status(401).json({ error: 'Invalid credentials' });
+
+    const token = jwt.sign({ id: user.id, email: user.email, role: user.role }, process.env.JWT_SECRET, { expiresIn: '7d' });
+    res.json({ token, user: { id: user.id, email: user.email, name: user.name, role: user.role } });
+  } catch (err) { next(err); }
+});
+
 // GET /api/auth/me
 router.get('/me', requireAuth, async (req, res, next) => {
   try {

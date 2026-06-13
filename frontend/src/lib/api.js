@@ -32,6 +32,17 @@ export async function login(email, password) {
   return data;
 }
 
+export async function adminLogin(email, password) {
+  const data = await req('/auth/admin-login', {
+    method: 'POST',
+    body: JSON.stringify({ email, password }),
+  });
+  localStorage.setItem('deskguard_token', data.token);
+  localStorage.setItem('deskguard_user', JSON.stringify(data.user));
+  sessionStorage.setItem('deskguard_session', '1');
+  return data;
+}
+
 export async function register(email, password, name) {
   const data = await req('/auth/register', {
     method: 'POST',
