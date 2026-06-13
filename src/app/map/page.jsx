@@ -17,7 +17,6 @@ const STUDY_CLS = {
   away:      'bg-yellow-100 border border-yellow-200 text-yellow-700',
 }
 
-// ── Cell helpers ─────────────────────────────────────────────────────────────
 const DESK_STYLE = {
   available: { background: 'rgba(240,253,244,1)', border: '0.74px solid rgba(134,239,172,1)', color: '#166534' },
   occupied:  { background: 'rgba(254,242,242,1)', border: '0.74px solid rgba(254,202,202,1)', color: '#991b1b' },
@@ -113,9 +112,7 @@ function StudyDeskBtn({ label, status }) {
   )
 }
 
-// ── Left Wing layout ──────────────────────────────────────────────────────────
 function LeftWingMap() {
-  // PC columns (7 rows each)
   const pc1 = [
     {l:'PC 1',s:A},{l:'PC 2',s:A},{l:'PC 3',s:A},
     {l:'PC 4',s:W},{l:'PC 5',s:A},{l:'PC 6',s:A},{l:'PC 7',s:A},
@@ -141,7 +138,6 @@ function LeftWingMap() {
     {l:'25',s:O},{l:'26',s:O},{l:'27',s:W},{l:'28',s:O},
   ]
 
-  // Cubicle rows: 3 rows × 6 vertical cells
   const cub1 = [{l:'Cubicle 01',s:O},{l:'Cubicle 04',s:O},{l:'Cubicle 07',s:O},{l:'Cubicle 10',s:O},{l:'Cubicle 13',s:A},{l:'Cubicle 16',s:A}]
   const cub2 = [{l:'Cubicle 02',s:O},{l:'Cubicle 05',s:O},{l:'Cubicle 08',s:W},{l:'Cubicle 11',s:W},{l:'Cubicle 14',s:A},{l:'Cubicle 17',s:A}]
   const cub3 = [{l:'Cubicle 03',s:O},{l:'Cubicle 06',s:O},{l:'Cubicle 09',s:O},{l:'Cubicle 12',s:A},{l:'Cubicle 15',s:A},{l:'Cubicle 18',s:A}]
@@ -163,34 +159,21 @@ function LeftWingMap() {
 
   return (
     <div className="flex flex-col gap-3">
-      {/* ── Top section: PC cols + desk cols + cubicles + right collab rooms ── */}
       <div className="flex gap-1.5 items-start">
-        {/* PC 1 & 2 */}
         <Col cells={pc1} />
         <Col cells={pc2} />
-
-        {/* Desk group 1 */}
         <Col cells={desk1} />
-
         <DeskDivider label="DESK" />
-
-        {/* Desk group 2 & 3 */}
         <Col cells={desk2} />
         <Col cells={desk3} />
-
         <DeskDivider label="DESK" />
-
-        {/* Desk group 4 */}
         <Col cells={desk4} />
-
-        {/* Cubicle rows */}
         <div className="flex flex-col gap-1 ml-1">
           <CubRow cells={cub1} />
           <CubRow cells={cub2} />
           <CubRow cells={cub3} />
         </div>
 
-        {/* Collab Study Rooms 3 & 4 — stacked in the white space */}
         <div className="flex flex-col gap-3 ml-3">
           {[
             { title: 'Collab Study Room 4', desks: [{s:O},{s:O},{s:A}] },
@@ -221,9 +204,7 @@ function LeftWingMap() {
         </div>
       </div>
 
-      {/* ── Bottom section: Reception + Bookshelves + Collab Rooms 1 & 2 ── */}
       <div className="flex gap-3 items-stretch mt-1">
-        {/* Reception */}
         <div
           className="flex items-center justify-center flex-shrink-0"
           style={{
@@ -242,7 +223,6 @@ function LeftWingMap() {
           <span className="text-[8px] font-bold uppercase tracking-widest text-gray-400">Reception</span>
         </div>
 
-        {/* Bookshelves */}
         <div
           className="flex items-center justify-center flex-shrink-0"
           style={{
@@ -259,7 +239,6 @@ function LeftWingMap() {
           <span className="text-[10px] font-bold uppercase tracking-widest text-gray-300">Bookshelves</span>
         </div>
 
-        {/* Collab Study Rooms 1 & 2 */}
         {[
           { title: 'Collab Study Room 1', desks: [{s:O},{s:A},{s:A}] },
           { title: 'Collab Study Room 2', desks: [{s:O},{s:O},{s:A}] },
@@ -291,9 +270,7 @@ function LeftWingMap() {
   )
 }
 
-// ── Right Wing layout — matches screenshot exactly ────────────────────────────
 function RightWingMap() {
-  // PC columns: 3 groups × 7 rows
   const pcGroup1 = [
     { label: 'PC 15', s: A },{ label: 'PC 16', s: A },{ label: 'PC 17', s: A },
     { label: 'PC 18', s: A },{ label: 'PC 19', s: A },{ label: 'PC 20', s: A },{ label: 'PC 21', s: A },
@@ -319,7 +296,6 @@ function RightWingMap() {
     { label: '23', s: O },{ label: '24', s: O },{ label: '24', s: O },{ label: '28', s: O },
   ]
 
-  // Cubicle rows — each column is one vertical cell
   const cubRow1 = [
     { label: 'Cubicle 01', s: O },{ label: 'Cubicle 04', s: O },
     { label: 'Cubicle 08', s: W },{ label: 'Cubicle 11', s: W },
@@ -353,7 +329,6 @@ function RightWingMap() {
 
   return (
     <div className="flex flex-col gap-3 mt-2">
-      {/* Reception + Bookshelves */}
       <div className="flex gap-2 mb-2">
         <div
           className="flex items-center justify-center flex-shrink-0"
@@ -389,30 +364,21 @@ function RightWingMap() {
         </div>
       </div>
 
-      {/* Main grid */}
       <div className="flex gap-2 items-start">
-        {/* PC groups */}
         <PcCol cells={pcGroup1} />
         <PcCol cells={pcGroup2} />
         <PcCol cells={deskCol1} />
-
         <DeskDivider label="DESK" />
-
         <PcCol cells={deskCol2} />
         <PcCol cells={deskCol3} />
-
         <DeskDivider label="DESK" />
-
         <PcCol cells={deskCol4} />
-
-        {/* Cubicles */}
         <div className="flex flex-col gap-1 ml-1">
           <CubRow cells={cubRow1} />
           <CubRow cells={cubRow2} />
           <CubRow cells={cubRow3} />
         </div>
 
-        {/* Collab Study Rooms 5 & 6 */}
         <div className="flex flex-col gap-3 ml-4 flex-shrink-0">
           {[
             { title: 'Collab Study Room 5', desks: [{s:O},{s:O},{s:O}] },
@@ -446,7 +412,6 @@ function RightWingMap() {
   )
 }
 
-// ── Sidebar ───────────────────────────────────────────────────────────────────
 const WING_META = {
   left:  { name: 'Left Wing',  subtitle: 'PC 1-14 | Desks 01-28 | Cubicle 01-18 | Collab Study Room 1-4', occupancy: 55, availableDesks: 30, avgWaitTime: '2m' },
   right: { name: 'Right Wing', subtitle: 'PC 15-28 | Desks 29-56 | Cubicle 19-36 | Collab Study Room 5-6', occupancy: 85, availableDesks: 12, avgWaitTime: '15m' },
@@ -468,8 +433,6 @@ export default function MapPage() {
 
   return (
     <div className="flex flex-col h-screen bg-gray-50 overflow-hidden">
-
-      {/* Nav */}
       <nav className="flex items-center bg-white border-b border-gray-200 px-8 h-20 gap-6 flex-shrink-0">
         <Image src="/full-logo.svg" alt="DeskGuard" width={48} height={36} priority />
         <div className="flex items-center gap-1">
@@ -506,8 +469,6 @@ export default function MapPage() {
       </nav>
 
       <div className="flex flex-1 overflow-hidden">
-
-        {/* Sidebar */}
         <aside
           className="flex flex-col flex-shrink-0 overflow-y-auto"
           style={{
@@ -574,7 +535,6 @@ export default function MapPage() {
           </div>
         </aside>
 
-        {/* Main */}
         <main className="flex-1 overflow-auto bg-gray-50 p-6 flex items-start justify-center">
           <div className="bg-white flex flex-col" style={{ width:1163, minHeight:866, borderRadius:'7.55px', border:'0.94px solid rgba(198,198,205,1)', boxShadow:'0 0.94px 1.89px rgba(0,0,0,0.05)', padding:28, flexShrink:0 }}>
             <div className="mb-4 pb-4 border-b border-gray-100">
