@@ -1,16 +1,20 @@
 # dependencies
-/node_modules
+node_modules/
+frontend/node_modules/
+backend/node_modules/
 
 # Next.js build output
-/.next
-/out
+frontend/.next
+frontend/out
 
 # production
-/build
+build/
 
 # env files
 .env
 .env.local
+frontend/.env.local
+backend/.env
 .env.development.local
 .env.test.local
 .env.production.local
@@ -25,4 +29,8 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
-next-env.d.ts
+frontend/next-env.d.ts
+
+# SQLite DB
+backend/prisma/dev.db
+backend/prisma/dev.db-journal
