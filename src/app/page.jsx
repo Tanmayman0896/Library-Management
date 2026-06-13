@@ -9,32 +9,23 @@ const LOGO_H = Math.round(300 * (398 / 539))
 
 export default function SplashPage() {
   const router = useRouter()
-  // 'idle' → 'rising' → 'done'
+  // 'idle' → 'rising'
   const [stage, setStage] = useState('idle')
 
   useEffect(() => {
     // Short pause so the ghost outline is visible first
     const t1 = setTimeout(() => setStage('rising'), 400)
-    // After rise animation completes (0.4 delay + 1.8s rise = 2.2s) fade out page
-    const t2 = setTimeout(() => setStage('done'), 2400)
-    // Navigate after fade
-    const t3 = setTimeout(() => router.push('/home'), 2950)
+    // Navigate the instant the rise animation finishes (0.4s delay + 1.8s rise)
+    // Both pages are white so the cut is seamless — no fade needed
+    const t2 = setTimeout(() => router.push('/home'), 2200)
     return () => {
       clearTimeout(t1)
       clearTimeout(t2)
-      clearTimeout(t3)
     }
   }, [router])
 
   return (
-    <div
-      className="flex items-center justify-center min-h-screen bg-white"
-      style={
-        stage === 'done'
-          ? { animation: 'splashFadeOut 0.5s ease forwards' }
-          : undefined
-      }
-    >
+    <div className="flex items-center justify-center min-h-screen bg-white">
       {/* Fixed-size container so both layers overlap perfectly */}
       <div
         style={{ position: 'relative', width: LOGO_W, height: LOGO_H }}
