@@ -107,7 +107,6 @@ export default function MapPage() {
 
   return (
     <div className="flex flex-col h-screen bg-gray-50 overflow-hidden">
-
       <nav className="flex items-center bg-white border-b border-gray-200 px-5 h-14 gap-4 flex-shrink-0">
         <Image src="/full-logo.svg" alt="DeskGuard" width={34} height={26} priority />
 
@@ -257,17 +256,15 @@ export default function MapPage() {
           </div>
         </aside>
 
-        <main className="flex-1 overflow-auto bg-gray-50 p-6 flex items-start justify-center">
+        <main className="flex-1 overflow-auto bg-white">
           <div
-            className="bg-white flex flex-col"
+            className="bg-white flex flex-col min-h-full"
             style={{
-              width: '1163px',
-              minHeight: '866px',
-              borderRadius: '7.55px',
               border: '0.94px solid rgba(198,198,205,1)',
-              boxShadow: '0 0.94px 1.89px rgba(0,0,0,0.05)',
+              borderRadius: '7.55px',
+              margin: '16px',
               padding: '28px',
-              flexShrink: 0,
+              boxShadow: '0 0.94px 1.89px rgba(0,0,0,0.05)',
             }}
           >
 
