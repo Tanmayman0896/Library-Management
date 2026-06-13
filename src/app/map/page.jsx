@@ -201,11 +201,11 @@ function LeftWingMap() {
               className="flex flex-col items-center flex-shrink-0"
               style={{
                 width: 200,
-                height: 200,
+                height: 210,
                 borderRadius: '7.55px',
                 border: '0.94px dashed rgba(203,213,225,1)',
                 paddingTop: '20.29px',
-                paddingBottom: '21.24px',
+                paddingBottom: '32px',
                 paddingLeft: '19px',
                 paddingRight: '19px',
                 gap: 12,
