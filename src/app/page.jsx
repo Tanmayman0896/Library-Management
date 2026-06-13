@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 // Logo dimensions (Vector.svg viewBox 0 0 539 398)
-const LOGO_W = 300
-const LOGO_H = Math.round(300 * (398 / 539))
+const LOGO_W = 420
+const LOGO_H = Math.round(420 * (398 / 539))
 
 export default function SplashPage() {
   const router = useRouter()
@@ -15,9 +15,9 @@ export default function SplashPage() {
   useEffect(() => {
     // Short pause so the ghost outline is visible first
     const t1 = setTimeout(() => setStage('rising'), 400)
-    // Navigate the instant the rise animation finishes (0.4s delay + 1.8s rise)
+    // Navigate the instant the rise animation finishes (0.5s delay + 2.8s rise)
     // Both pages are white so the cut is seamless — no fade needed
-    const t2 = setTimeout(() => router.push('/home'), 2200)
+    const t2 = setTimeout(() => router.push('/home'), 3300)
     return () => {
       clearTimeout(t1)
       clearTimeout(t2)

@@ -39,7 +39,7 @@ body {
 
 .logo-rise {
   clip-path: inset(100% 0 0 0);
-  animation: rise 1.8s cubic-bezier(0.22, 1, 0.36, 1) 0.5s forwards;
+  animation: rise 2.8s cubic-bezier(0.22, 1, 0.36, 1) 0.5s forwards;
 }
 
 .splash-fade-out {
