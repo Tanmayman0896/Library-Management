@@ -84,7 +84,7 @@ function DeskDivider({ label }) {
         flexShrink: 5,
       }}
     >
-      <span className="text-[6px] font-bold uppercase tracking-widest text-gray-400">{label}</span>
+      <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400">{label}</span>
     </div>
   )
 }
@@ -189,9 +189,39 @@ function LeftWingMap() {
           <CubRow cells={cub2} />
           <CubRow cells={cub3} />
         </div>
+
+        {/* Collab Study Rooms 3 & 4 — stacked in the white space */}
+        <div className="flex flex-col gap-3 ml-3">
+          {[
+            { title: 'Collab Study Room 4', desks: [{s:O},{s:O},{s:A}] },
+            { title: 'Collab Study Room 3', desks: [{s:A},{s:A},{s:A}] },
+          ].map((room, ri) => (
+            <div
+              key={ri}
+              className="flex flex-col items-center flex-shrink-0"
+              style={{
+                width: 200,
+                height: 200,
+                borderRadius: '7.55px',
+                border: '0.94px dashed rgba(203,213,225,1)',
+                paddingTop: '20.29px',
+                paddingBottom: '21.24px',
+                paddingLeft: '19px',
+                paddingRight: '19px',
+                gap: 12,
+                boxSizing: 'border-box',
+              }}
+            >
+              <p className="text-[9px] font-bold uppercase tracking-wider text-gray-400 w-full">{room.title}</p>
+              <div className="flex flex-col" style={{ gap: 12 }}>
+                {room.desks.map((d,i) => <StudyDeskBtn key={i} label={`Study Desk ${i+1}`} status={d.s} />)}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
-      {/* ── Bottom section: Reception + Bookshelves + Collab Rooms 1, 2, 3, 4 ── */}
+      {/* ── Bottom section: Reception + Bookshelves + Collab Rooms 1 & 2 ── */}
       <div className="flex gap-3 items-stretch mt-1">
         {/* Reception */}
         <div
@@ -229,12 +259,10 @@ function LeftWingMap() {
           <span className="text-[10px] font-bold uppercase tracking-widest text-gray-300">Bookshelves</span>
         </div>
 
-        {/* Collab Study Rooms 1, 2, 3, 4 — all in one row */}
+        {/* Collab Study Rooms 1 & 2 */}
         {[
           { title: 'Collab Study Room 1', desks: [{s:O},{s:A},{s:A}] },
           { title: 'Collab Study Room 2', desks: [{s:O},{s:O},{s:A}] },
-          { title: 'Collab Study Room 3', desks: [{s:A},{s:A},{s:A}] },
-          { title: 'Collab Study Room 4', desks: [{s:O},{s:O},{s:A}] },
         ].map((room, ri) => (
           <div
             key={ri}
