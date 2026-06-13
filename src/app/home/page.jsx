@@ -7,10 +7,10 @@ export default function HomePage() {
       {/* Navbar */}
       <nav className="flex items-center justify-between px-[110px] py-6">
         <Image
-          src="/logo.svg"
+          src="/full-logo.svg"
           alt="DeskGuard"
-          width={56}
-          height={40}
+          width={72}
+          height={52}
           priority
         />
         <Link
