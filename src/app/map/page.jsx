@@ -55,83 +55,136 @@ function StudyDeskBtn({ label, status }) {
 
 // ── Left Wing layout ──────────────────────────────────────────────────────────
 function LeftWingMap() {
-  const leftPCs = [
-    [A,O,A,O,A,O,A],
-    [O,A,O,A,O,A,O],
-    [A,O,O,O,O,O,O],
+  // PC columns (7 rows each)
+  const pc1 = [
+    {l:'PC 1',s:A},{l:'PC 2',s:A},{l:'PC 3',s:A},
+    {l:'PC 4',s:W},{l:'PC 5',s:A},{l:'PC 6',s:A},{l:'PC 7',s:A},
   ]
-  const desks1 = [
-    [O,O,O,O,O,O,O],
-    [O,A,O,O,O,O,O],
+  const pc2 = [
+    {l:'PC 8',s:A},{l:'PC 9',s:A},{l:'PC 10',s:A},
+    {l:'PC 11',s:A},{l:'PC 12',s:A},{l:'PC 13',s:A},{l:'PC 14',s:A},
   ]
-  const desks2 = [
-    [O,O,O,O,O,O,O],
-    [W,O,O,O,O,O,O],
+  const desk1 = [
+    {l:'01',s:A},{l:'02',s:O},{l:'03',s:O},
+    {l:'04',s:O},{l:'05',s:O},{l:'06',s:O},{l:'07',s:O},
   ]
-  const cubRows = [
-    [O,O,W,W,O,O],
-    [O,O,O,O,O,O],
-    [O,O,O,O,O,O],
+  const desk2 = [
+    {l:'08',s:O},{l:'09',s:O},{l:'10',s:O},
+    {l:'11',s:O},{l:'12',s:O},{l:'13',s:O},{l:'14',s:O},
   ]
-  const cubLabels = ['Cubicle 01','Cubicle 04','Cubicle 08','Cubicle 11','Cubicle 13','Cubicle 16']
-  const cubLabels2 = ['Cubicle 09','Cubicle 09','Cubicle 09','Cubicle 09','Cubicle 14','Cubicle 17']
-  const cubLabels3 = ['Cubicle 09','Cubicle 09','Cubicle 09','Cubicle 12','Cubicle 15','Cubicle 18']
+  const desk3 = [
+    {l:'15',s:W},{l:'16',s:O},{l:'17',s:O},
+    {l:'18',s:O},{l:'19',s:O},{l:'20',s:O},{l:'21',s:O},
+  ]
+  const desk4 = [
+    {l:'22',s:O},{l:'23',s:O},{l:'24',s:O},
+    {l:'25',s:O},{l:'26',s:O},{l:'27',s:W},{l:'28',s:O},
+  ]
+
+  // Cubicle rows: 3 rows × 6 vertical cells
+  const cub1 = [{l:'Cubicle 01',s:O},{l:'Cubicle 04',s:O},{l:'Cubicle 07',s:O},{l:'Cubicle 10',s:O},{l:'Cubicle 13',s:A},{l:'Cubicle 16',s:A}]
+  const cub2 = [{l:'Cubicle 02',s:O},{l:'Cubicle 05',s:O},{l:'Cubicle 08',s:W},{l:'Cubicle 11',s:W},{l:'Cubicle 14',s:A},{l:'Cubicle 17',s:A}]
+  const cub3 = [{l:'Cubicle 03',s:O},{l:'Cubicle 06',s:O},{l:'Cubicle 09',s:O},{l:'Cubicle 12',s:A},{l:'Cubicle 15',s:A},{l:'Cubicle 18',s:A}]
+
+  function Col({ cells }) {
+    return (
+      <div className="flex flex-col gap-1">
+        {cells.map((c,i) => <DeskCell key={i} label={c.l} status={c.s} />)}
+      </div>
+    )
+  }
+  function CubRow({ cells }) {
+    return (
+      <div className="flex gap-1">
+        {cells.map((c,i) => <CubicleCell key={i} label={c.l} status={c.s} />)}
+      </div>
+    )
+  }
 
   return (
-    <div className="flex gap-3 items-start mt-4">
-      {/* PC columns 1-3 */}
-      {leftPCs.map((col, ci) => (
-        <div key={ci} className="flex flex-col gap-1">
-          {col.map((s, ri) => (
-            <DeskCell key={ri} label={`PC ${ci === 0 ? 15+ri : ci === 1 ? 22+ri : ri+1}`} status={s} />
-          ))}
-        </div>
-      ))}
+    <div className="flex flex-col gap-3">
+      {/* ── Top section: PC cols + desk cols + cubicles + right collab rooms ── */}
+      <div className="flex gap-1.5 items-start">
+        {/* PC 1 & 2 */}
+        <Col cells={pc1} />
+        <Col cells={pc2} />
 
-      <DeskDivider label="DESK" />
+        {/* Desk group 1 */}
+        <Col cells={desk1} />
 
-      {/* Desk columns */}
-      {desks1.map((col, ci) => (
-        <div key={ci} className="flex flex-col gap-1">
-          {col.map((s, ri) => <DeskCell key={ri} label={`${9+ri}`} status={s} />)}
-        </div>
-      ))}
+        <DeskDivider label="DESK" />
 
-      <DeskDivider label="DESK" />
+        {/* Desk group 2 & 3 */}
+        <Col cells={desk2} />
+        <Col cells={desk3} />
 
-      {/* More desk columns */}
-      {desks2.map((col, ci) => (
-        <div key={ci} className="flex flex-col gap-1">
-          {col.map((s, ri) => <DeskCell key={ri} label={`${22+ri}`} status={s} />)}
-        </div>
-      ))}
+        <DeskDivider label="DESK" />
 
-      {/* Cubicle rows stacked */}
-      <div className="flex flex-col gap-2 ml-1">
-        <div className="flex gap-1">
-          {cubLabels.map((l,i) => <CubicleCell key={i} label={l} status={cubRows[0][i]} />)}
+        {/* Desk group 4 */}
+        <Col cells={desk4} />
+
+        {/* Cubicle rows */}
+        <div className="flex flex-col gap-1 ml-1">
+          <CubRow cells={cub1} />
+          <CubRow cells={cub2} />
+          <CubRow cells={cub3} />
         </div>
-        <div className="flex gap-1">
-          {cubLabels2.map((l,i) => <CubicleCell key={i} label={l} status={cubRows[1][i]} />)}
-        </div>
-        <div className="flex gap-1">
-          {cubLabels3.map((l,i) => <CubicleCell key={i} label={l} status={cubRows[2][i]} />)}
+
+        {/* Right collab rooms: 4 (top) and 3 (below) */}
+        <div className="flex flex-col gap-4 ml-3 flex-shrink-0 w-[140px]">
+          <div>
+            <p className="text-[8px] font-bold uppercase tracking-wider text-gray-400 mb-1.5">Collab Study Room 4</p>
+            <div className="flex flex-col gap-1.5">
+              <StudyDeskBtn label="Study Desk 1" status={O} />
+              <StudyDeskBtn label="Study Desk 2" status={O} />
+              <StudyDeskBtn label="Study Desk 3" status={A} />
+            </div>
+          </div>
+          <div>
+            <p className="text-[8px] font-bold uppercase tracking-wider text-gray-400 mb-1.5">Collab Study Room 3</p>
+            <div className="flex flex-col gap-1.5">
+              <StudyDeskBtn label="Study Desk 1" status={A} />
+              <StudyDeskBtn label="Study Desk 2" status={A} />
+              <StudyDeskBtn label="Study Desk 3" status={A} />
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Collab rooms */}
-      <div className="flex flex-col gap-5 ml-4 flex-shrink-0 w-[130px]">
-        {[
-          { title: 'COLLAB STUDY ROOM 1', desks: [A,O,A] },
-          { title: 'COLLAB STUDY ROOM 2', desks: [A,O,A] },
-        ].map(room => (
-          <div key={room.title}>
-            <p className="text-[8px] font-bold uppercase tracking-wider text-gray-400 mb-1.5">{room.title}</p>
-            <div className="flex flex-col gap-1">
-              {room.desks.map((s,i) => <StudyDeskBtn key={i} label={`Study Desk ${i+1}`} status={s} />)}
-            </div>
+      {/* ── Bottom section: Reception + Bookshelves + Collab Rooms 1 & 2 ── */}
+      <div className="flex gap-3 items-stretch mt-1">
+        {/* Reception */}
+        <div
+          className="border border-dashed border-gray-300 rounded flex items-center justify-center flex-shrink-0"
+          style={{ width: 56, height: 140, writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+        >
+          <span className="text-[8px] font-bold uppercase tracking-widest text-gray-400">Reception</span>
+        </div>
+
+        {/* Bookshelves */}
+        <div className="flex-1 border border-dashed border-gray-300 rounded flex items-center justify-center" style={{ height: 140 }}>
+          <span className="text-[10px] font-bold uppercase tracking-widest text-gray-300">Bookshelves</span>
+        </div>
+
+        {/* Collab Study Room 1 */}
+        <div className="flex-shrink-0 w-[140px]">
+          <p className="text-[8px] font-bold uppercase tracking-wider text-gray-400 mb-1.5">Collab Study Room 1</p>
+          <div className="flex flex-col gap-1.5">
+            <StudyDeskBtn label="Study Desk 1" status={O} />
+            <StudyDeskBtn label="Study Desk 2" status={A} />
+            <StudyDeskBtn label="Study Desk 3" status={A} />
           </div>
-        ))}
+        </div>
+
+        {/* Collab Study Room 2 */}
+        <div className="flex-shrink-0 w-[140px]">
+          <p className="text-[8px] font-bold uppercase tracking-wider text-gray-400 mb-1.5">Collab Study Room 2</p>
+          <div className="flex flex-col gap-1.5">
+            <StudyDeskBtn label="Study Desk 1" status={O} />
+            <StudyDeskBtn label="Study Desk 2" status={O} />
+            <StudyDeskBtn label="Study Desk 3" status={A} />
+          </div>
+        </div>
       </div>
     </div>
   )
@@ -261,7 +314,7 @@ function RightWingMap() {
 
 // ── Sidebar ───────────────────────────────────────────────────────────────────
 const WING_META = {
-  left:  { name: 'Left Wing',  subtitle: 'PC 1-14 | Desks 15-28 | Cubicle 01-18 | Collab Study Room 1-4', occupancy: 55, availableDesks: 30, avgWaitTime: '2m' },
+  left:  { name: 'Left Wing',  subtitle: 'PC 1-14 | Desks 01-28 | Cubicle 01-18 | Collab Study Room 1-4', occupancy: 55, availableDesks: 30, avgWaitTime: '2m' },
   right: { name: 'Right Wing', subtitle: 'PC 15-28 | Desks 29-56 | Cubicle 19-36 | Collab Study Room 5-6', occupancy: 85, availableDesks: 12, avgWaitTime: '15m' },
 }
 
