@@ -11,19 +11,8 @@ const adminRoutes = require('./routes/admin');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-const allowedOrigins = [
-  'http://localhost:3000',
-  process.env.FRONTEND_URL,
-].filter(Boolean);
-app.use(cors({
-  origin: (origin, cb) => {
-    if (!origin) return cb(null, true);
-    if (allowedOrigins.includes(origin)) return cb(null, true);
-    if (origin.endsWith('.netlify.app') || origin.endsWith('.vercel.app')) return cb(null, true);
-    cb(new Error('Not allowed by CORS'));
-  },
-  credentials: true,
-}));
+app.use(cors({ origin: true, credentials: true }));
+app.options('*', cors({ origin: true, credentials: true }));
 app.use(express.json());
 
 app.get('/api/health', (req, res) => res.json({ ok: true, time: new Date().toISOString() }));
