@@ -26,10 +26,26 @@ function DeskCell({ label, status = O, tall = false }) {
   )
 }
 function CubicleCell({ label, status = O }) {
+  const statusStyle = {
+    available: { background: 'rgba(240,253,244,1)', border: '0.74px solid rgba(134,239,172,1)', color: '#166534' },
+    occupied:  { background: 'rgba(254,242,242,1)', border: '0.74px solid rgba(254,202,202,1)', color: '#991b1b' },
+    away:      { background: 'rgba(254,252,232,1)', border: '0.74px solid rgba(253,224,71,1)',  color: '#854d0e' },
+  }
+  const s = statusStyle[status] || statusStyle.occupied
   return (
     <div
-      className={`flex items-center justify-center rounded text-[8px] font-semibold cursor-pointer select-none hover:opacity-75 transition-opacity ${DESK_CLS[status]}`}
-      style={{ width: 40, height: 40, writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+      className="flex items-center justify-center cursor-pointer select-none hover:opacity-75 transition-opacity text-[8px] font-semibold"
+      style={{
+        width: 62,
+        height: 149,
+        borderRadius: '2.94px',
+        border: s.border,
+        background: s.background,
+        color: s.color,
+        writingMode: 'vertical-rl',
+        transform: 'rotate(180deg)',
+        flexShrink: 0,
+      }}
     >
       {label}
     </div>
