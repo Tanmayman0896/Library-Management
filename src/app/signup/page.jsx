@@ -30,9 +30,17 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen overflow-hidden">
       {/* Left — black panel with white logo */}
-      <div className="w-[55%] bg-black flex items-center justify-center flex-shrink-0">
+      <div
+        className="bg-black flex items-center justify-center flex-shrink-0"
+        style={{
+          width: '801px',
+          minHeight: '982px',
+          borderTopRightRadius: '68px',
+          borderBottomRightRadius: '68px',
+        }}
+      >
         <Image
           src="/white-logo.svg"
           alt="DeskGuard"
