@@ -257,7 +257,19 @@ export default function MapPage() {
           </div>
         </aside>
 
-        <main className="flex-1 overflow-auto p-6">
+        <main className="flex-1 overflow-auto bg-gray-50 p-6 flex items-start justify-center">
+          <div
+            className="bg-white flex flex-col"
+            style={{
+              width: '1163px',
+              minHeight: '866px',
+              borderRadius: '7.55px',
+              border: '0.94px solid rgba(198,198,205,1)',
+              boxShadow: '0 0.94px 1.89px rgba(0,0,0,0.05)',
+              padding: '28px',
+              flexShrink: 0,
+            }}
+          >
 
           {/* Header */}
           <div className="mb-5">
@@ -353,6 +365,7 @@ export default function MapPage() {
                 </div>
               ))}
             </div>
+          </div>
           </div>
         </main>
       </div>
