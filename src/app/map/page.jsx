@@ -18,9 +18,26 @@ const STUDY_CLS = {
 }
 
 // ── Cell helpers ─────────────────────────────────────────────────────────────
-function DeskCell({ label, status = O, tall = false }) {
+const DESK_STYLE = {
+  available: { background: 'rgba(240,253,244,1)', border: '0.74px solid rgba(134,239,172,1)', color: '#166534' },
+  occupied:  { background: 'rgba(254,242,242,1)', border: '0.74px solid rgba(254,202,202,1)', color: '#991b1b' },
+  away:      { background: 'rgba(254,252,232,1)', border: '0.74px solid rgba(253,224,71,1)',  color: '#854d0e' },
+}
+function DeskCell({ label, status = O }) {
+  const s = DESK_STYLE[status] || DESK_STYLE.occupied
   return (
-    <div className={`flex items-center justify-center rounded text-[9px] font-semibold cursor-pointer select-none hover:opacity-75 transition-opacity ${tall ? 'w-10 h-14' : 'w-10 h-10'} ${DESK_CLS[status]}`}>
+    <div
+      className="flex items-center justify-center cursor-pointer select-none hover:opacity-75 transition-opacity text-[9px] font-semibold"
+      style={{
+        width: 59.71,
+        height: 59.71,
+        borderRadius: '2.94px',
+        border: s.border,
+        background: s.background,
+        color: s.color,
+        flexShrink: 0,
+      }}
+    >
       {label}
     </div>
   )
