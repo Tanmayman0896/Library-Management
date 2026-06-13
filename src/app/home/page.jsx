@@ -28,10 +28,10 @@ export default function HomePage() {
         </Link>
       </nav>
 
-      {/* Hero */}
-      <main className="flex flex-1 items-center justify-between px-[110px] pt-[40px] pb-[40px]">
-        {/* Left — copy */}
-        <div className="max-w-[500px]">
+      {/* Hero — matches Figma: 898px content, left 110px, top 220px from page top */}
+      <main className="flex flex-1 items-center px-[110px] pt-[80px] pb-[80px]">
+        {/* Left — copy, max ~560px */}
+        <div className="flex-1 max-w-[560px]">
           {/* DeskGuard badge */}
           <div className="inline-flex items-center gap-2 border border-gray-300 rounded-sm px-3 py-1.5 mb-8">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -41,16 +41,16 @@ export default function HomePage() {
             <span className="text-sm font-medium text-black">DeskGuard</span>
           </div>
 
-          <h1 className="text-[58px] font-extrabold leading-[1.05] tracking-tight text-black mb-6 whitespace-nowrap">
+          <h1 className="text-[72px] font-extrabold leading-[1.05] tracking-tight text-black mb-6">
             Fair Study Spaces for<br />Everyone.
           </h1>
 
-          <p className="text-[16px] text-gray-500 leading-relaxed mb-10 max-w-[440px]">
+          <p className="text-[17px] text-gray-500 leading-relaxed mb-12 max-w-[500px]">
             The real-time desk management system that ends desk-hogging. Find a spot, scan in, and focus on what matters.
           </p>
 
           {/* CTA buttons */}
-          <div className="flex gap-4 mb-10">
+          <div className="flex gap-4 mb-14">
             <Link
               href="/scan"
               className="flex items-center gap-2.5 bg-black text-white text-base font-semibold px-8 py-4 rounded-md hover:bg-gray-800 transition-colors"
@@ -86,13 +86,13 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Right — illustration */}
-        <div className="flex-shrink-0">
+        {/* Right — illustration, pushed to right edge */}
+        <div className="flex-shrink-0 ml-auto">
           <Image
             src="/human.svg"
             alt="Student studying illustration"
-            width={420}
-            height={520}
+            width={460}
+            height={560}
             priority
           />
         </div>

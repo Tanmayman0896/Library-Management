@@ -4,10 +4,8 @@ import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
-// ── Status shorthand ────────────────────────────────────────────────────────
 const A = 'available', O = 'occupied', W = 'away'
 
-// ── Wing data ────────────────────────────────────────────────────────────────
 const WING_DATA = {
   left: {
     name: 'Left Wing',
@@ -67,7 +65,6 @@ const ZONE_SPANS = [
   { label: 'Study Zone 4', rows: 1 },
 ]
 
-// ── Colour maps ───────────────────────────────────────────────────────────────
 const DESK_CLS = {
   available: 'bg-green-100 border-green-300 text-green-800',
   occupied:  'bg-red-100   border-red-300   text-red-700',
@@ -79,7 +76,6 @@ const STUDY_CLS = {
   away:      'bg-yellow-100 border-yellow-200 text-yellow-700',
 }
 
-// ── Component ─────────────────────────────────────────────────────────────────
 export default function MapPage() {
   const router = useRouter()
   const [activeWing, setActiveWing] = useState('left')
@@ -112,7 +108,6 @@ export default function MapPage() {
   return (
     <div className="flex flex-col h-screen bg-gray-50 overflow-hidden">
 
-      {/* ── Top Nav ─────────────────────────────────────────────────────────── */}
       <nav className="flex items-center bg-white border-b border-gray-200 px-5 h-14 gap-4 flex-shrink-0">
         <Image src="/full-logo.svg" alt="DeskGuard" width={34} height={26} priority />
 
@@ -172,10 +167,8 @@ export default function MapPage() {
         </div>
       </nav>
 
-      {/* ── Body ────────────────────────────────────────────────────────────── */}
       <div className="flex flex-1 overflow-hidden">
 
-        {/* ── Sidebar ───────────────────────────────────────────────────────── */}
         <aside className="w-52 bg-white border-r border-gray-200 flex flex-col flex-shrink-0 overflow-y-auto">
           <div className="p-4 flex flex-col gap-4">
 
@@ -264,7 +257,6 @@ export default function MapPage() {
           </div>
         </aside>
 
-        {/* ── Main content ──────────────────────────────────────────────────── */}
         <main className="flex-1 overflow-auto p-6">
 
           {/* Header */}
