@@ -73,20 +73,17 @@ function DeskDivider({ label }) {
     <div
       className="flex items-center justify-center flex-shrink-0"
       style={{
-        width: 4,
+        width: 2,
         height: 442,
         borderRadius: '7.55px',
         border: '0.94px dashed rgba(198,198,205,1)',
         background: 'rgba(248,250,252,1)',
-        paddingLeft: '48.61px',
-        paddingRight: '50.5px',
         writingMode: 'vertical-rl',
         transform: 'rotate(180deg)',
-        boxSizing: 'border-box',
+        overflow: 'hidden',
+        flexShrink: 0,
       }}
-    >
-      <span className="text-[7px] font-bold uppercase tracking-widest text-gray-400">{label}</span>
-    </div>
+    />
   )
 }
 const STUDY_STYLE = {
