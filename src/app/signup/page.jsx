@@ -3,9 +3,11 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 export default function SignupPage() {
   const [step, setStep] = useState(1)
+  const router = useRouter()
   const [form, setForm] = useState({
     firstName: '',
     lastName: '',
@@ -26,7 +28,8 @@ export default function SignupPage() {
 
   function handleSubmit(e) {
     e.preventDefault()
-    // Registration logic goes here
+    sessionStorage.setItem('deskguard_session', '1')
+    router.push('/map')
   }
 
   return (

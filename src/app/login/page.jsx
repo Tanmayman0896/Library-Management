@@ -13,7 +13,7 @@ export default function LoginPage() {
 
   function handleSubmit(e) {
     e.preventDefault()
-    // Auth logic goes here
+    sessionStorage.setItem('deskguard_session', '1')
     router.push('/map')
   }
 

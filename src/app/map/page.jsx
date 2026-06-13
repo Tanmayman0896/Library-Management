@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
@@ -85,6 +85,13 @@ export default function MapPage() {
   const [activeWing, setActiveWing] = useState('left')
   const [activeTab, setActiveTab]   = useState('map')
 
+  // Guard: redirect to login if no session
+  useEffect(() => {
+    if (!sessionStorage.getItem('deskguard_session')) {
+      router.replace('/login')
+    }
+  }, [router])
+
   const wing = WING_DATA[activeWing]
 
   // Assign sequential desk IDs per wing
@@ -143,7 +150,10 @@ export default function MapPage() {
         {/* Right actions */}
         <div className="flex items-center gap-2 ml-auto">
           <button
-            onClick={() => router.push('/login')}
+            onClick={() => {
+              sessionStorage.removeItem('deskguard_session')
+              router.push('/login')
+            }}
             className="flex items-center gap-1.5 text-xs font-medium border border-gray-300 rounded-md px-3 py-1.5 hover:bg-gray-100 transition-colors"
           >
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
